@@ -3,13 +3,15 @@
 
 #include <QWidget>
 
-class sortingAlgoRenderer
+
+class sortingAlgoRenderer : public QWidget
 {
+    Q_OBJECT
 public:
-    sortingAlgoRenderer();
+    explicit sortingAlgoRenderer(QWidget* parent = nullptr);
     sortingAlgoRenderer(std::vector<int> vec);
 
-private:
+protected:
     struct bar
     {
         int val;
@@ -31,7 +33,8 @@ private:
 
     void startAnimation();
 
-    // virtual void sort(); // sort is obviously implemented by child classes <sort type>
+    void paintEvent(QPaintEvent* event) override;
+
 };
 
 #endif // SORTINGALGORENDERER_H
