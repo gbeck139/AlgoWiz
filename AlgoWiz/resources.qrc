@@ -4,8 +4,8 @@
         <file>wizard.png</file>
     </qresource>
     <qresource prefix="/audios">
-        <file>calm.mp3</file>
         <file>cool.mp3</file>
+        <file>calm.mp3</file>
         <file>hype.mp3</file>
     </qresource>
 </RCC>

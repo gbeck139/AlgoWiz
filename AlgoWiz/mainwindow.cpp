@@ -22,26 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
     audioOutput->setVolume(0.25);
     player->setAudioOutput(audioOutput);
 
-    //Slower universal method ((will take a couple minutes to build first time around)
+    // Will take a few seconds to build first time around)
+
     player->setSource(QUrl("qrc:/audios/cool.mp3")); // simply change song name to either 'calm.mp3', 'cool.mp3', or 'hype.mp3'
 
-
-
-    // FASTER METHOD for loading audio
-
-    // QString audioPath;
-    // #ifdef Q_OS_MACOS
-    // audioPath = QDir(QCoreApplication::applicationDirPath())
-    //                 .filePath("../../../audios/cool.mp3");
-    // #else
-    // audioPath = QDir(QCoreApplication::applicationDirPath())
-    //                 .filePath("audios/dope.mp3");
-    // #endif
-    // player->setSource(QUrl::fromLocalFile(audioPath));
-
     player->play();
-
-
 }
 
 MainWindow::~MainWindow()
