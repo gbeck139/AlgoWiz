@@ -64,6 +64,7 @@ SOURCES += \
     graphtheorywindow.cpp \
     main.cpp \
     mainwindow.cpp \
+    sortingalgorenderer.cpp \
     mergesortwindow.cpp \
     runtimewindow.cpp \
     selectionsortwindow.cpp \
@@ -130,6 +131,8 @@ HEADERS += \
     selectionsortwindow.h \
     sortinggamewindow.h \
     stalinsortwindow.h
+    mainwindow.h \
+    sortingalgorenderer.h
 
 FORMS += \
     mainwindow.ui
