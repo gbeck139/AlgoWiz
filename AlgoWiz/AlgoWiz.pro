@@ -1,4 +1,5 @@
 QT       += core gui
+QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -119,3 +120,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     Box2D/Box2DConfig.cmake \
     Box2D/CMakeLists.txt
+
+RESOURCES += \
+    resources.qrc
