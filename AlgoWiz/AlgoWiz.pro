@@ -56,11 +56,15 @@ SOURCES += \
     Box2D/Dynamics/b2World.cpp \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
+    bfswindow.cpp \
     dfswindow.cpp \
+    graphtheorywindow.cpp \
     main.cpp \
     mainwindow.cpp \
     mergesortwindow.cpp \
-    runtimewindow.cpp
+    runtimewindow.cpp \
+    selectionsortwindow.cpp \
+    stalinsortwindow.cpp
 
 HEADERS += \
     Box2D/Box2D.h \
@@ -110,10 +114,14 @@ HEADERS += \
     Box2D/Dynamics/b2World.h \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
+    bfswindow.h \
     dfswindow.h \
+    graphtheorywindow.h \
     mainwindow.h \
     mergesortwindow.h \
-    runtimewindow.h
+    runtimewindow.h \
+    selectionsortwindow.h \
+    stalinsortwindow.h
 
 FORMS += \
     mainwindow.ui

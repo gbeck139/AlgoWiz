@@ -1,5 +1,9 @@
 #include "mainwindow.h"
+#include "bfswindow.h"
+#include "graphtheorywindow.h"
 #include "mergesortwindow.h"
+#include "selectionsortwindow.h"
+#include "stalinsortwindow.h"
 #include "ui_mainwindow.h"
 #include <QPainter> // for bg image
 #include <QPixmap>
@@ -28,8 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // Algorithm windows and buttons
-    QList<QPushButton*> algoButtons = {ui->dfsWindowButton, ui->runtimeWindowButton, ui->mergesortWindowButton};
-    QList<QWidget*> algoWindows = {new DFSWindow(), new RuntimeWindow(), new MergeSortWindow()};
+    QList<QPushButton*> algoButtons = {ui->dfsWindowButton, ui->runtimeWindowButton, ui->mergesortWindowButton, ui->selectionSortWindowButton, ui->stalinSortWindowButton, ui->graphTheoryWindowButton, ui->bfsWindowButton};
+    QList<QWidget*> algoWindows = {new DFSWindow(), new RuntimeWindow(), new MergeSortWindow(), new SelectionSortWindow(), new StalinSortWindow(), new GraphTheoryWindow(), new BFSWindow()};
 
     // Set Button Styles and connect to windows
     for (int i = 0; i < algoButtons.size(); ++i) {

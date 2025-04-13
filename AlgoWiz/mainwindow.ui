@@ -65,8 +65,8 @@
    <widget class="QPushButton" name="dfsWindowButton">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>620</y>
+      <x>350</x>
+      <y>650</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -78,8 +78,8 @@
    <widget class="QPushButton" name="runtimeWindowButton">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>660</y>
+      <x>230</x>
+      <y>620</y>
       <width>111</width>
       <height>24</height>
      </rect>
@@ -91,14 +91,66 @@
    <widget class="QPushButton" name="mergesortWindowButton">
     <property name="geometry">
      <rect>
-      <x>320</x>
+      <x>230</x>
+      <y>650</y>
+      <width>101</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MergeSort</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="selectionSortWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>680</y>
+      <width>131</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SelectionSort</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="stalinSortWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>680</y>
+      <width>121</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>StalinSort</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="graphTheoryWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
       <y>620</y>
+      <width>111</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Graph Theory</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bfsWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>650</y>
       <width>75</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>Mergesort</string>
+     <string>BFS</string>
     </property>
    </widget>
   </widget>
