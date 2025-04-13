@@ -88,6 +88,19 @@
      <string>Runtime</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="mergesortWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>620</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Mergesort</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -2,9 +2,9 @@
 #include <QLabel>
 
 RuntimeWindow::RuntimeWindow(QWidget *parent) : QWidget(parent) {
-    setWindowTitle("Depth-First Search");
+    setWindowTitle("Runtime");
     resize(400, 300);
 
-    QLabel *label = new QLabel("This is where we teach DFS!", this);
+    QLabel *label = new QLabel("This is where we teach Runtime!", this);
     label->move(50, 50);
 }

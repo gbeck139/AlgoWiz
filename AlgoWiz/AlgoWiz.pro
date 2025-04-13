@@ -59,6 +59,7 @@ SOURCES += \
     dfswindow.cpp \
     main.cpp \
     mainwindow.cpp \
+    mergesortwindow.cpp \
     runtimewindow.cpp
 
 HEADERS += \
@@ -111,6 +112,7 @@ HEADERS += \
     Box2D/Rope/b2Rope.h \
     dfswindow.h \
     mainwindow.h \
+    mergesortwindow.h \
     runtimewindow.h
 
 FORMS += \
