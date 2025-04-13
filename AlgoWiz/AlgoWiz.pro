@@ -58,7 +58,8 @@ SOURCES += \
     Box2D/Rope/b2Rope.cpp \
     dfswindow.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    runtimewindow.cpp
 
 HEADERS += \
     Box2D/Box2D.h \
@@ -109,7 +110,8 @@ HEADERS += \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     dfswindow.h \
-    mainwindow.h
+    mainwindow.h \
+    runtimewindow.h
 
 FORMS += \
     mainwindow.ui

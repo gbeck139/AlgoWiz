@@ -25,23 +25,23 @@ MainWindow::MainWindow(QWidget *parent)
     player->setSource(QUrl("qrc:/audios/cool.mp3")); // simply change song name to either 'calm.mp3', 'cool.mp3', or 'hype.mp3'
     player->play();
 
-    // Set Algorithm Button styles
-    QList<QPushButton*> algoButtons = {ui->dfsWindowButton};
-    for(QPushButton* btn : algoButtons){
-        setStyle(btn);
+
+    // Algorithm windows and buttons
+    QList<QPushButton*> algoButtons = {ui->dfsWindowButton, ui->runtimeWindowButton};
+    QList<QWidget*> algoWindows = {new DFSWindow(), new RuntimeWindow()};
+
+    // Set Button Styles and connect to windows
+    for (int i = 0; i < algoButtons.size(); ++i) {
+        QPushButton *button = algoButtons[i];
+        QWidget *window = algoWindows[i];
+
+        setStyle(button);
+        connect(button, &QPushButton::clicked, this, [window]() {
+            window->show();
+        });
     }
 
 
-
-
-
-
-
-
-
-
-    // Algorithm Windows
-    connect(ui->dfsWindowButton, &QPushButton::clicked, this, &MainWindow::openDFS);
 }
 
 MainWindow::~MainWindow()
@@ -69,8 +69,7 @@ void MainWindow::paintEvent(QPaintEvent *event){
 
 // Algorithm Windows
 void MainWindow::openDFS(){
-    DFSWindow *dfsWindow = new DFSWindow();
-    dfsWindow->show();
+
 }
 
 

@@ -4,6 +4,7 @@
 #include "qpushbutton.h"
 #include <QMainWindow>
 #include <dfswindow.h>
+#include <runtimewindow.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

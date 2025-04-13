@@ -65,7 +65,7 @@
    <widget class="QPushButton" name="dfsWindowButton">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>220</x>
       <y>620</y>
       <width>75</width>
       <height>24</height>
@@ -73,6 +73,19 @@
     </property>
     <property name="text">
      <string>DFS</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="runtimeWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>660</y>
+      <width>111</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Runtime</string>
     </property>
    </widget>
   </widget>
