@@ -1,7 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "qpushbutton.h"
 #include <QMainWindow>
+#include <dfswindow.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,5 +22,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    // Set style for buttons
+    void setStyle(QPushButton* btn);
+
+public slots:
+    // Slots for algorithm windows
+    void openDFS();
+
+
 };
 #endif // MAINWINDOW_H

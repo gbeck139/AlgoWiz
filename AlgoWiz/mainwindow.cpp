@@ -6,27 +6,42 @@
 #include <QAudioOutput>
 #include <QUrl>
 #include <QDir>
+#include <QList>
+#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     setFixedSize(1375, 875);
 
     // music
     QMediaPlayer *player = new QMediaPlayer(this);
     QAudioOutput *audioOutput = new QAudioOutput(this);
-
     audioOutput->setVolume(0.25);
     player->setAudioOutput(audioOutput);
-
     // Will take a few seconds to build first time around)
-
     player->setSource(QUrl("qrc:/audios/cool.mp3")); // simply change song name to either 'calm.mp3', 'cool.mp3', or 'hype.mp3'
-
     player->play();
+
+    // Set Algorithm Button styles
+    QList<QPushButton*> algoButtons = {ui->dfsWindowButton};
+    for(QPushButton* btn : algoButtons){
+        setStyle(btn);
+    }
+
+
+
+
+
+
+
+
+
+
+    // Algorithm Windows
+    connect(ui->dfsWindowButton, &QPushButton::clicked, this, &MainWindow::openDFS);
 }
 
 MainWindow::~MainWindow()
@@ -50,4 +65,41 @@ void MainWindow::paintEvent(QPaintEvent *event){
         int y = (height() - scaled.height()) / 2;
         painter.drawPixmap(x, y, scaled);
     }
+}
+
+// Algorithm Windows
+void MainWindow::openDFS(){
+    DFSWindow *dfsWindow = new DFSWindow();
+    dfsWindow->show();
+}
+
+
+
+
+
+void MainWindow::setStyle(QPushButton* btn){
+    btn->setFlat(true);  // Removes 3D effect
+    btn->setStyleSheet(R"(
+        QPushButton {
+            background-color: transparent;
+            border: 2px solid #FFA500; /* Fiery orange */
+            border-radius: 4px;
+            font-size: 20px;
+            font-weight: bold;
+            font-style: italic;
+            color: #FFA500;
+        }
+
+        QPushButton:hover {
+            color: #FF4500; /* Brighter gold on hover */
+            border-color: #FF4500;
+        }
+
+        QPushButton:checked {
+            color: #FF6347; /* Highlighted red for selected */
+            border-color: #FF6347;
+            background-color: rgba(255, 99, 71, 0.1);
+        }
+    )");
+    btn->setCheckable(true); // Allows the button to be "selected"
 }
