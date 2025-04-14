@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1075</width>
+    <width>1275</width>
     <height>838</height>
    </rect>
   </property>
@@ -151,6 +151,58 @@
     </property>
     <property name="text">
      <string>BFS</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="dijkstraWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>620</y>
+      <width>101</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Dijkstra</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="binarySearchWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>680</y>
+      <width>121</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Binary Search</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sortingGameWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>620</y>
+      <width>161</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sorting Game</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="graphGameWindowButton">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>670</y>
+      <width>161</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Graph Game</string>
     </property>
    </widget>
   </widget>

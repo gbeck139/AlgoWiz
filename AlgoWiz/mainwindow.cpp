@@ -1,8 +1,12 @@
 #include "mainwindow.h"
 #include "bfswindow.h"
+#include "binarysearchwindow.h"
+#include "dijkstrawindow.h"
+#include "graphgamewindow.h"
 #include "graphtheorywindow.h"
 #include "mergesortwindow.h"
 #include "selectionsortwindow.h"
+#include "sortinggamewindow.h"
 #include "stalinsortwindow.h"
 #include "ui_mainwindow.h"
 #include <QPainter> // for bg image
@@ -32,8 +36,32 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // Algorithm windows and buttons
-    QList<QPushButton*> algoButtons = {ui->dfsWindowButton, ui->runtimeWindowButton, ui->mergesortWindowButton, ui->selectionSortWindowButton, ui->stalinSortWindowButton, ui->graphTheoryWindowButton, ui->bfsWindowButton};
-    QList<QWidget*> algoWindows = {new DFSWindow(), new RuntimeWindow(), new MergeSortWindow(), new SelectionSortWindow(), new StalinSortWindow(), new GraphTheoryWindow(), new BFSWindow()};
+    QList<QPushButton*> algoButtons = {
+        ui->dfsWindowButton,
+        ui->runtimeWindowButton,
+        ui->mergesortWindowButton,
+        ui->selectionSortWindowButton,
+        ui->stalinSortWindowButton,
+        ui->graphTheoryWindowButton,
+        ui->bfsWindowButton,
+        ui->dijkstraWindowButton,
+        ui->binarySearchWindowButton,
+        ui->sortingGameWindowButton,
+        ui->graphGameWindowButton
+    };
+    QList<QWidget*> algoWindows = {
+        new DFSWindow(),
+        new RuntimeWindow(),
+        new MergeSortWindow(),
+        new SelectionSortWindow(),
+        new StalinSortWindow(),
+        new GraphTheoryWindow(),
+        new BFSWindow(),
+        new DijkstraWindow(),
+        new BinarySearchWindow(),
+        new SortingGameWindow(),
+        new GraphGameWindow()
+    };
 
     // Set Button Styles and connect to windows
     for (int i = 0; i < algoButtons.size(); ++i) {
@@ -87,7 +115,7 @@ void MainWindow::setStyle(QPushButton* btn){
         QPushButton {
             background-color: transparent;
             border: 2px solid #FFA500; /* Fiery orange */
-            border-radius: 4px;
+            border-radius: 2px;
             font-size: 20px;
             font-weight: bold;
             font-style: italic;
@@ -97,12 +125,6 @@ void MainWindow::setStyle(QPushButton* btn){
         QPushButton:hover {
             color: #FF4500; /* Brighter gold on hover */
             border-color: #FF4500;
-        }
-
-        QPushButton:checked {
-            color: #FF6347; /* Highlighted red for selected */
-            border-color: #FF6347;
-            background-color: rgba(255, 99, 71, 0.1);
         }
     )");
     btn->setCheckable(true); // Allows the button to be "selected"
