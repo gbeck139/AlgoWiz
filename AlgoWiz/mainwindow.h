@@ -28,8 +28,6 @@ private:
     void setStyle(QPushButton* btn);
 
 public slots:
-    // Slots for algorithm windows
-    void openDFS();
 
 
 };
