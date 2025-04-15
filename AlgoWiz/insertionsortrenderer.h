@@ -4,13 +4,17 @@
 #include "sortingalgorenderer.h"
 #include <QTimer>
 
-class Insertionsortrenderer : public sortingAlgoRenderer
+class InsertionSortRenderer : public sortingAlgoRenderer
 {
 public:
-    Insertionsortrenderer();
+    InsertionSortRenderer();
 
 private:
-    void sort();
+    int currentStep = 1;
+    int whileStep = 0;
+    bool stepInProgress = false; // false when we move to next step in for loop
+    void runSortStep();
+    void startAnimation();
     QTimer timer;
 };
 

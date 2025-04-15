@@ -1,22 +1,22 @@
 #include "mainwindow.h"
+#include <QAudioOutput>
+#include <QDir>
+#include <QList>
+#include <QMediaPlayer> // for music
+#include <QPainter>     // for bg image
+#include <QPixmap>
+#include <QPushButton>
+#include <QUrl>
 #include "bfswindow.h"
 #include "binarysearchwindow.h"
 #include "dijkstrawindow.h"
 #include "graphgamewindow.h"
 #include "graphtheorywindow.h"
+#include "insertionsortwindow.h"
 #include "mergesortwindow.h"
-#include "selectionsortwindow.h"
 #include "sortinggamewindow.h"
 #include "stalinsortwindow.h"
 #include "ui_mainwindow.h"
-#include <QPainter> // for bg image
-#include <QPixmap>
-#include <QMediaPlayer> // for music
-#include <QAudioOutput>
-#include <QUrl>
-#include <QDir>
-#include <QList>
-#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -47,19 +47,17 @@ MainWindow::MainWindow(QWidget *parent)
                                         ui->binarySearchWindowButton,
                                         ui->sortingGameWindowButton,
                                         ui->graphGameWindowButton};
-    QList<QWidget*> algoWindows = {
-        new DFSWindow(),
-        new RuntimeWindow(),
-        new MergeSortWindow(),
-        new SelectionSortWindow(),
-        new StalinSortWindow(),
-        new GraphTheoryWindow(),
-        new BFSWindow(),
-        new DijkstraWindow(),
-        new BinarySearchWindow(),
-        new SortingGameWindow(),
-        new GraphGameWindow()
-    };
+    QList<QWidget *> algoWindows = {new DFSWindow(),
+                                    new RuntimeWindow(),
+                                    new MergeSortWindow(),
+                                    new InsertionSortWindow(),
+                                    new StalinSortWindow(),
+                                    new GraphTheoryWindow(),
+                                    new BFSWindow(),
+                                    new DijkstraWindow(),
+                                    new BinarySearchWindow(),
+                                    new SortingGameWindow(),
+                                    new GraphGameWindow()};
 
     // Set Button Styles and connect to windows
     for (int i = 0; i < algoButtons.size(); ++i) {

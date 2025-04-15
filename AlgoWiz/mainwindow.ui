@@ -101,7 +101,7 @@
      <string>MergeSort</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="selectionSortWindowButton">
+   <widget class="QPushButton" name="insertionSortWindowButton">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -111,7 +111,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>SelectionSort</string>
+     <string>Insertion Sort</string>
     </property>
    </widget>
    <widget class="QPushButton" name="stalinSortWindowButton">

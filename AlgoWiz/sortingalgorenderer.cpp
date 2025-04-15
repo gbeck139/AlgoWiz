@@ -46,10 +46,11 @@ void sortingAlgoRenderer::shuffle()
 
 void sortingAlgoRenderer::displayBars()
 {
-    update();
+    update(); // refresh drawing of widget
 }
 
-void sortingAlgoRenderer::paintEvent(QPaintEvent* event) {
+void sortingAlgoRenderer::paintEvent(QPaintEvent *)
+{
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -67,7 +68,7 @@ void sortingAlgoRenderer::paintEvent(QPaintEvent* event) {
         double normalizedHeight = static_cast<double>(bar.val) / largestBar;
         int barHeightPx = static_cast<int>(normalizedHeight * widgetHeight);
 
-        int x = static_cast<int>(i * barWidth);
+        int x = i * barWidth;
         int y = widgetHeight - barHeightPx;
 
         QRectF rect(x, y, barWidth, barHeightPx);

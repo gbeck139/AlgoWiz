@@ -63,12 +63,12 @@ SOURCES += \
     graphgamewindow.cpp \
     graphtheorywindow.cpp \
     insertionsortrenderer.cpp \
+    insertionsortwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     sortingalgorenderer.cpp \
     mergesortwindow.cpp \
     runtimewindow.cpp \
-    selectionsortwindow.cpp \
     sortinggamewindow.cpp \
     stalinsortwindow.cpp
 
@@ -126,10 +126,10 @@ HEADERS += \
     dijkstrawindow.h \
     graphgamewindow.h \
     graphtheorywindow.h \
+    insertionsortwindow.h \
     mainwindow.h \
     mergesortwindow.h \
     runtimewindow.h \
-    selectionsortwindow.h \
     sortinggamewindow.h \
     stalinsortwindow.h \
     insertionsortrenderer.h \
