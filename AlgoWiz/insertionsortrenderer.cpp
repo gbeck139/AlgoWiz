@@ -1,5 +1,6 @@
 #include "insertionsortrenderer.h"
 #include <QDebug>
+#include <QTimer>
 
 InsertionSortRenderer::InsertionSortRenderer()
 {

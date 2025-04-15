@@ -2,7 +2,6 @@
 #define INSERTIONSORTRENDERER_H
 
 #include "sortingalgorenderer.h"
-#include <QTimer>
 
 class InsertionSortRenderer : public sortingAlgoRenderer
 {
@@ -15,7 +14,6 @@ private:
     bool stepInProgress = false; // false when we move to next step in for loop
     void runSortStep();
     void startAnimation();
-    QTimer timer;
 };
 
 #endif // INSERTIONSORTRENDERER_H

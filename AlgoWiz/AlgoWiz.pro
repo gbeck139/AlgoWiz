@@ -71,6 +71,7 @@ SOURCES += \
     mergesortwindow.cpp \
     runtimewindow.cpp \
     sortinggamewindow.cpp \
+    stalinsortrenderer.cpp \
     stalinsortwindow.cpp
 
 HEADERS += \
@@ -133,6 +134,7 @@ HEADERS += \
     mergesortwindow.h \
     runtimewindow.h \
     sortinggamewindow.h \
+    stalinsortrenderer.h \
     stalinsortwindow.h \
     insertionsortrenderer.h \
     mainwindow.h \
