@@ -36,19 +36,17 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // Algorithm windows and buttons
-    QList<QPushButton*> algoButtons = {
-        ui->dfsWindowButton,
-        ui->runtimeWindowButton,
-        ui->mergesortWindowButton,
-        ui->selectionSortWindowButton,
-        ui->stalinSortWindowButton,
-        ui->graphTheoryWindowButton,
-        ui->bfsWindowButton,
-        ui->dijkstraWindowButton,
-        ui->binarySearchWindowButton,
-        ui->sortingGameWindowButton,
-        ui->graphGameWindowButton
-    };
+    QList<QPushButton *> algoButtons = {ui->dfsWindowButton,
+                                        ui->runtimeWindowButton,
+                                        ui->mergesortWindowButton,
+                                        ui->insertionSortWindowButton,
+                                        ui->stalinSortWindowButton,
+                                        ui->graphTheoryWindowButton,
+                                        ui->bfsWindowButton,
+                                        ui->dijkstraWindowButton,
+                                        ui->binarySearchWindowButton,
+                                        ui->sortingGameWindowButton,
+                                        ui->graphGameWindowButton};
     QList<QWidget*> algoWindows = {
         new DFSWindow(),
         new RuntimeWindow(),
@@ -101,13 +99,9 @@ void MainWindow::paintEvent(QPaintEvent *event){
 }
 
 // Algorithm Windows
-void MainWindow::openDFS(){
+// void MainWindow::openDFS(){
 
-}
-
-
-
-
+// }
 
 void MainWindow::setStyle(QPushButton* btn){
     btn->setFlat(true);  // Removes 3D effect

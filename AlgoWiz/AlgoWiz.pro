@@ -131,7 +131,7 @@ HEADERS += \
     runtimewindow.h \
     selectionsortwindow.h \
     sortinggamewindow.h \
-    stalinsortwindow.h
+    stalinsortwindow.h \
     insertionsortrenderer.h \
     mainwindow.h \
     sortingalgorenderer.h
