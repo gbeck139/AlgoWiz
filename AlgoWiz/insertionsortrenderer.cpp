@@ -50,9 +50,7 @@ void InsertionSortRenderer::runSortStep()
 
     // case: bar needs to move left (we need to do a swap)
     if (whileStep > 0 && bars[whileStep - 1].val > bars[whileStep].val) {
-        std::swap(bars[whileStep - 1], bars[whileStep]); // color stays with bar struct?
-        // setBarColor(whileStep - 1, Qt::red);
-        // setBarColor(whileStep, defaultColor);
+        std::swap(bars[whileStep - 1], bars[whileStep]);
         whileStep--;
         update();
         QTimer::singleShot(200, this, &InsertionSortRenderer::runSortStep);

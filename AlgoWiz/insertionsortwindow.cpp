@@ -23,9 +23,6 @@ InsertionSortWindow::InsertionSortWindow(QWidget *parent)
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignCenter);
 
-    // QLabel *label = new QLabel("This is where we teach MergeSort!", this);
-    // label->move(50, 50);
-
     // Create the InsertionSortRenderer
     renderer = new InsertionSortRenderer();
     renderer->setMinimumHeight(300);
