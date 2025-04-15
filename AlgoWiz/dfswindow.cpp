@@ -18,7 +18,6 @@ DFSWindow::DFSWindow(QWidget *parent) : QWidget(parent) {
     renderer->addEdge("A", "C");
 
     renderer->runTraversalAnimation({"A", "B", "C"});
-    renderer->show();
 }
 
 

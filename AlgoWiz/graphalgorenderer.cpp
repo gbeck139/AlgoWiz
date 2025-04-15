@@ -44,7 +44,17 @@ void GraphAlgoRenderer::runTraversalAnimation(const QVector<QString> &traversalO
     }
 }
 
-void GraphAlgoRenderer::displayNodes()
-{
+void GraphAlgoRenderer::addNode(const QString& id, const QPoint& position){
+    nodes[id] = Node{position, defaultColor};
+}
+
+void GraphAlgoRenderer::addEdge(const QString& from, const QString& to){
+    edges.push_back({from, to});
+}
+
+void GraphAlgoRenderer::setNodeColor(const QString& id, const QColor& color){
+    if (nodes.count(id) > 0){
+        nodes[id].color = color;
+    }
     update();
 }

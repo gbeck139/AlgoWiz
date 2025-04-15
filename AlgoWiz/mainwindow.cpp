@@ -47,28 +47,36 @@ MainWindow::MainWindow(QWidget *parent)
                                         ui->binarySearchWindowButton,
                                         ui->sortingGameWindowButton,
                                         ui->graphGameWindowButton};
-    QList<QWidget *> algoWindows = {new DFSWindow(),
-                                    new RuntimeWindow(),
-                                    new MergeSortWindow(),
-                                    new InsertionSortWindow(),
-                                    new StalinSortWindow(),
-                                    new GraphTheoryWindow(),
-                                    new BFSWindow(),
-                                    new DijkstraWindow(),
-                                    new BinarySearchWindow(),
-                                    new SortingGameWindow(),
-                                    new GraphGameWindow()};
 
-    // Set Button Styles and connect to windows
+    // Save as lambdas so that the animation in the window do not begin running yet
+    QList<std::function<QWidget*()>> windowFactories = {
+        []() { return new DFSWindow(); },
+        []() { return new RuntimeWindow(); },
+        []() { return new MergeSortWindow(); },
+        []() { return new InsertionSortWindow(); },
+        []() { return new StalinSortWindow(); },
+        []() { return new GraphTheoryWindow(); },
+        []() { return new BFSWindow(); },
+        []() { return new DijkstraWindow(); },
+        []() { return new BinarySearchWindow(); },
+        []() { return new SortingGameWindow(); },
+        []() { return new GraphGameWindow(); }
+    };
+
+
+
     for (int i = 0; i < algoButtons.size(); ++i) {
         QPushButton *button = algoButtons[i];
-        QWidget *window = algoWindows[i];
+        auto factory = windowFactories[i];
 
         setStyle(button);
-        connect(button, &QPushButton::clicked, this, [window]() {
-            window->show();
+        connect(button, &QPushButton::clicked, this, [factory]() {
+            QWidget *win = factory();
+            win->show();
         });
     }
+
+
 
 
 }

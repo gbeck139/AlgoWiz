@@ -13,16 +13,14 @@ public:
     void addEdge(const QString& from, const QString& to);
     void setNodeColor(const QString& id, const QColor& color);
 
-    void runTraversalAnimation(const QVector<QString>& traversalOrder, int delayMs = 300);
-
-    void displayNodes();
+    void runTraversalAnimation(const QVector<QString>& traversalOrder, int delayMs = 2000);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
 
     struct Node {
         QPoint pos;
-        QColor color = Qt::white;
+        QColor color = Qt::black;
     };
 
     struct Edge {
