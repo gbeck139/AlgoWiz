@@ -60,6 +60,7 @@ SOURCES += \
     binarysearchwindow.cpp \
     dfswindow.cpp \
     dijkstrawindow.cpp \
+    graphalgorenderer.cpp \
     graphgamewindow.cpp \
     graphtheorywindow.cpp \
     insertionsortrenderer.cpp \
@@ -124,6 +125,7 @@ HEADERS += \
     binarysearchwindow.h \
     dfswindow.h \
     dijkstrawindow.h \
+    graphalgorenderer.h \
     graphgamewindow.h \
     graphtheorywindow.h \
     insertionsortwindow.h \
