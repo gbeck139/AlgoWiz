@@ -12,8 +12,9 @@ public:
     void addNode(const QString& id, const QPoint& position);
     void addEdge(const QString& from, const QString& to);
     void setNodeColor(const QString& id, const QColor& color);
+    void createUnweightedGraph();
 
-    void runTraversalAnimation(const QVector<QString>& traversalOrder, int delayMs = 2000);
+    void runTraversalAnimation(const QVector<QString>& traversalOrder, int delayMs = 1000);
 
 protected:
     void paintEvent(QPaintEvent* event) override;
