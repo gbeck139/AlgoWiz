@@ -12,8 +12,10 @@ public:
     void addNode(const QString& id, const QPoint& position);
     void addEdge(const QString& from, const QString& to, bool weighted, int weight = 0);
     void setNodeColor(const QString& id, const QColor& color);
+    void setEdgeColor(int id, const QColor& color);
     void createUnweightedGraph();
     void createTheoryGraph();
+    void createWeightedGraph();
 
     void runTraversalAnimation(const QVector<QString>& traversalOrder, int delayMs = 1000);
 
@@ -30,6 +32,7 @@ protected:
         QString to;
         bool weighted;
         int weight;
+        QColor color = Qt::black;
     };
 
     QMap<QString, Node> nodes;
