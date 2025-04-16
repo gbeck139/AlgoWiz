@@ -13,6 +13,7 @@ public:
     void addEdge(const QString& from, const QString& to);
     void setNodeColor(const QString& id, const QColor& color);
     void createUnweightedGraph();
+    void createTheoryGraph();
 
     void runTraversalAnimation(const QVector<QString>& traversalOrder, int delayMs = 1000);
 

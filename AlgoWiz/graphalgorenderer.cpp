@@ -59,6 +59,14 @@ void GraphAlgoRenderer::setNodeColor(const QString& id, const QColor& color){
     update();
 }
 
+void GraphAlgoRenderer::createTheoryGraph(){
+    addNode("A", QPoint(100, 300));
+    addNode("B", QPoint(500, 300));
+    addNode("C", QPoint(600, 300));
+
+    addEdge("C", "B");
+}
+
 void GraphAlgoRenderer::createUnweightedGraph()
 {
     addNode("A", QPoint(100, 300));
