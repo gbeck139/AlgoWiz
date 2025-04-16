@@ -19,6 +19,11 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
         if (nodes.contains(edge.from) && nodes.contains(edge.to)) {
             QPoint from = nodes[edge.from].pos;
             QPoint to = nodes[edge.to].pos;
+            if (edge.weighted){
+                QPoint mid = (from + to) / 2;
+                QPoint labelPos = mid + QPoint(0, -10);
+                painter.drawText(labelPos, QString::number(edge.weight));
+            }
             painter.drawLine(from, to);
         }
     }
@@ -48,8 +53,8 @@ void GraphAlgoRenderer::addNode(const QString& id, const QPoint& position){
     nodes[id] = Node{position, defaultColor};
 }
 
-void GraphAlgoRenderer::addEdge(const QString& from, const QString& to){
-    edges.push_back({from, to});
+void GraphAlgoRenderer::addEdge(const QString& from, const QString& to, bool weighted, int weight){
+    edges.push_back({from, to, weighted, weight});
 }
 
 void GraphAlgoRenderer::setNodeColor(const QString& id, const QColor& color){
@@ -64,7 +69,12 @@ void GraphAlgoRenderer::createTheoryGraph(){
     addNode("B", QPoint(500, 300));
     addNode("C", QPoint(600, 300));
 
-    addEdge("C", "B");
+    addEdge("C", "B", false);
+
+    addNode("D", QPoint(100, 600));
+    addNode("E", QPoint(600, 600));
+
+    addEdge("D", "E", true, 6);
 }
 
 void GraphAlgoRenderer::createUnweightedGraph()
@@ -87,29 +97,29 @@ void GraphAlgoRenderer::createUnweightedGraph()
     addNode("P", QPoint(700, 750));
 
 
-    addEdge("A", "B");
-    addEdge("B", "C");
-    addEdge("C", "D");
-    addEdge("E", "F");
-    addEdge("F", "G");
-    addEdge("G", "H");
-    addEdge("I", "J");
-    addEdge("J", "K");
-    addEdge("K", "L");
-    addEdge("M", "N");
-    addEdge("N", "O");
-    addEdge("O", "P");
-    addEdge("A", "E");
-    addEdge("E", "I");
-    addEdge("I", "M");
-    addEdge("B", "F");
-    addEdge("F", "J");
-    addEdge("J", "N");
-    addEdge("C", "G");
-    addEdge("G", "K");
-    addEdge("K", "O");
-    addEdge("D", "H");
-    addEdge("H", "L");
-    addEdge("L", "P");
+    addEdge("A", "B", false);
+    addEdge("B", "C", false);
+    addEdge("C", "D", false);
+    addEdge("E", "F", false);
+    addEdge("F", "G", false);
+    addEdge("G", "H", false);
+    addEdge("I", "J", false);
+    addEdge("J", "K", false);
+    addEdge("K", "L", false);
+    addEdge("M", "N", false);
+    addEdge("N", "O", false);
+    addEdge("O", "P", false);
+    addEdge("A", "E", false);
+    addEdge("E", "I", false);
+    addEdge("I", "M", false);
+    addEdge("B", "F", false);
+    addEdge("F", "J", false);
+    addEdge("J", "N", false);
+    addEdge("C", "G", false);
+    addEdge("G", "K", false);
+    addEdge("K", "O", false);
+    addEdge("D", "H", false);
+    addEdge("H", "L", false);
+    addEdge("L", "P", false);
 }
 

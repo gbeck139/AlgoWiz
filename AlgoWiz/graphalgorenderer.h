@@ -10,7 +10,7 @@ public:
     explicit GraphAlgoRenderer(QWidget* parent = nullptr);
 
     void addNode(const QString& id, const QPoint& position);
-    void addEdge(const QString& from, const QString& to);
+    void addEdge(const QString& from, const QString& to, bool weighted, int weight = 0);
     void setNodeColor(const QString& id, const QColor& color);
     void createUnweightedGraph();
     void createTheoryGraph();
@@ -28,6 +28,8 @@ protected:
     struct Edge {
         QString from;
         QString to;
+        bool weighted;
+        int weight;
     };
 
     QMap<QString, Node> nodes;
