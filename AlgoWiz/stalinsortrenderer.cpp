@@ -22,6 +22,7 @@ void StalinSortRenderer::restoreList() {
 void StalinSortRenderer::startAnimation()
 {
     shuffle();
+    setBarColor(0, Qt::red);
     update();
     runSortStep();
 }

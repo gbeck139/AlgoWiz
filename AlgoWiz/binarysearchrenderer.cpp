@@ -22,7 +22,7 @@ void BinarySearchRenderer::runSearchStep()
 
     //When the target is not found(if it failed)
     if (low > high) {
-        for (int i = 0; i < bars.size(); ++i)
+        for (int i = 0; i < (int) bars.size(); ++i)
             setBarColor(i, Qt::gray);
         update();
         return;
@@ -31,7 +31,7 @@ void BinarySearchRenderer::runSearchStep()
     int mid = (low + high) / 2;
 
     //Move the position, and show it
-    for (int i = 0; i < bars.size(); ++i) {
+    for (int i = 0; i < (int) bars.size(); ++i) {
         if (i == mid)
             setBarColor(i, Qt::red); //Current position
         else if (i >= low && i <= high)
