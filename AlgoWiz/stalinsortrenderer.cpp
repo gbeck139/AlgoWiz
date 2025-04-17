@@ -2,17 +2,6 @@
 #include <QTimer>
 
 StalinSortRenderer::StalinSortRenderer() {
-    // put 20 bar structs in the bars vector
-    for (int i = 1; i <= 20; i++) {
-        bar b;
-        b.val = i;
-        b.color = defaultColor;
-
-        bars.push_back(b);
-    }
-
-    largestBar = 20; // hardcoded to our loop
-
     startAnimation();
 }
 
