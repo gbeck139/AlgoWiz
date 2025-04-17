@@ -57,6 +57,7 @@ SOURCES += \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
     bfswindow.cpp \
+    binarysearchrenderer.cpp \
     binarysearchwindow.cpp \
     dfswindow.cpp \
     dijkstrawindow.cpp \
@@ -124,6 +125,7 @@ HEADERS += \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     bfswindow.h \
+    binarysearchrenderer.h \
     binarysearchwindow.h \
     dfswindow.h \
     dijkstrawindow.h \
