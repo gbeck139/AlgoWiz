@@ -63,6 +63,21 @@ MainWindow::MainWindow(QWidget *parent)
         []() { return new GraphGameWindow(); }
     };
 
+    // set up for progress meter
+    totalTasks = algoButtons.size();
+    seen.fill(false, totalTasks);
+    ui->progressBar->setRange(0, 100);
+    ui->progressBar->setValue(0);
+
+    progressPercentLabel = ui->progressPercentLabel
+                               ? ui->progressPercentLabel
+                               : new QLabel("00%", this);
+
+    if (!ui->progressPercentLabel) {
+        progressPercentLabel->setGeometry(995, 40, 50, 23);
+        progressPercentLabel->setAlignment(Qt::AlignCenter);
+    }
+    progressPercentLabel->setText("00%");
 
 
     for (int i = 0; i < algoButtons.size(); ++i) {
@@ -70,7 +85,18 @@ MainWindow::MainWindow(QWidget *parent)
         auto factory = windowFactories[i];
 
         setStyle(button);
-        connect(button, &QPushButton::clicked, this, [factory]() {
+        connect(button, &QPushButton::clicked, this, [this, factory, i]() {
+
+            if (!seen[i]) {
+                seen[i] = true;
+                completed += 1;
+                int pct = completed * 100 / totalTasks;
+                ui->progressBar->setValue(pct);
+                QString txt = QString("%1%").arg(pct, 2, 10, QChar('0'));
+                progressPercentLabel->setText(txt);
+
+            }
+
             QWidget *win = factory();
             win->show();
         });

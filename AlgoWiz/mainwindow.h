@@ -1,10 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#pragma once
+
 #include "qpushbutton.h"
 #include <QMainWindow>
 #include <dfswindow.h>
 #include <runtimewindow.h>
+#include <QVector>
+#include <QLabel>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +31,11 @@ private:
 
     // Set style for buttons
     void setStyle(QPushButton* btn);
+
+    int totalTasks = 0;
+    int completed = 0;
+    QVector<bool> seen;
+    QLabel *progressPercentLabel;
 
 public slots:
 
