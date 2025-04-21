@@ -6,7 +6,7 @@ StalinSortRenderer::StalinSortRenderer() {
 }
 
 void StalinSortRenderer::restoreList() {
-    bars.clear();
+    bars = std::vector<bar>();
 
     for (int i = 1; i <= 20; i++) {
         bar b;
@@ -22,6 +22,7 @@ void StalinSortRenderer::restoreList() {
 void StalinSortRenderer::startAnimation()
 {
     shuffle();
+    setBarColor(0, Qt::red);
     update();
     runSortStep();
 }
@@ -29,19 +30,21 @@ void StalinSortRenderer::startAnimation()
 void StalinSortRenderer::runSortStep() {
     // done sorting
     if (currentStep >= (int) bars.size()) {
-        currentStep = 0;
+        currentStep = 1;
         restoreList();
         update();
         shuffle();
+        setBarColor(0, Qt::red);
         // run the animation on sort.
         QTimer::singleShot(
-            2000,
+            1000,
             this,
             &StalinSortRenderer::runSortStep); // pause for 2 sec before running the sort again
         return;
     }
 
     if(bars[currentStep].val < bars[currentStep - 1].val) {
+        qDebug() << "val: " << bars[currentStep].val << " val prev: " << bars[currentStep-1].val;
         // time to take current step bar out back
         bars.erase(bars.begin() + currentStep); // clear bar that is out of line.
         update();
