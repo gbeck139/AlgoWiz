@@ -1,9 +1,11 @@
 #ifndef SORTINGGAMEWINDOW_H
 #define SORTINGGAMEWINDOW_H
 
+#include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QWidget>
+#include <QLabel>
+#include <QTimer>
 #include "sortingalgorenderer.h"
 #include "sortinggameplayer.h"
 
@@ -13,18 +15,24 @@ class SortingGameWindow : public QWidget
 public:
     explicit SortingGameWindow(QWidget *parent = nullptr);
 
+signals:
+    void difficultySelected(int difficulty);
+
+private slots:
+    void handleDifficultySelection(int difficulty);
+    void checkAIProgress();
+    void handlePlayerFinished();
+
 private:
+    QVBoxLayout *layout;
     QPushButton *easySelection;
     QPushButton *mediumSelection;
     QPushButton *hardSelection;
-    QVBoxLayout *layout;
-    sortingGamePlayer *playerController;
     sortingAlgoRenderer *aiPlayer;
-public slots:
-    void handleDifficultySelection(int difficulty);
-
-signals:
-    void difficultySelected(int difficulty);
+    sortingGamePlayer *playerController;
+    QLabel *gameResultLabel;
+    bool aiFinished = false;
+    bool playerFinished = false;
 };
 
 #endif // SORTINGGAMEWINDOW_H

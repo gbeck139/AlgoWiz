@@ -79,14 +79,19 @@ void mergeSortRenderer::merge(int left, int mid, int right)
 
     update();
 
-    // Reset colors and continue to next step after a delay
-    QTimer::singleShot(1000, this, [=]() {
-        // Reset colors
+    int delay = 1200;
+    if (looping) { // handle regular animation and sorting game
+        delay = 500;
+    }
+
+    // reset colors and continue to next step after a delay
+    QTimer::singleShot(delay, this, [=]() {
+        // reset colors
         setBarColor(left, defaultColor);
         setBarColor(mid, defaultColor);
         setBarColor(right, defaultColor);
-        
-        // Reset merged section colors
+
+        // reset merged section colors
         for (int k = 0; k < (int) merged.size(); ++k) {
             setBarColor(left + k, defaultColor);
         }

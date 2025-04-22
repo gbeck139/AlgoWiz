@@ -30,6 +30,11 @@ void InsertionSortRenderer::runSortStep()
         }
     }
 
+    int delay = 800;
+    if (looping) {
+        delay = 200;
+    }
+
     // new outer loop iteration is occuring
     if (!stepInProgress) {
         // bar color change
@@ -37,7 +42,7 @@ void InsertionSortRenderer::runSortStep()
         stepInProgress = true;
         setBarColor(currentStep, Qt::red);
         update();
-        QTimer::singleShot(200, this, &InsertionSortRenderer::runSortStep);
+        QTimer::singleShot(delay, this, &InsertionSortRenderer::runSortStep);
         return;
     }
 
@@ -46,7 +51,7 @@ void InsertionSortRenderer::runSortStep()
         std::swap(bars[whileStep - 1], bars[whileStep]);
         whileStep--;
         update();
-        QTimer::singleShot(200, this, &InsertionSortRenderer::runSortStep);
+        QTimer::singleShot(delay, this, &InsertionSortRenderer::runSortStep);
         return;
 
     } else { // case: bar is where it's supposed to be
