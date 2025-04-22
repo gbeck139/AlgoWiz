@@ -69,6 +69,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mergesortrenderer.cpp \
+    quizwindow.cpp \
     sortingalgorenderer.cpp \
     mergesortwindow.cpp \
     runtimewindow.cpp \
@@ -137,6 +138,7 @@ HEADERS += \
     mainwindow.h \
     mergesortrenderer.h \
     mergesortwindow.h \
+    quizwindow.h \
     runtimewindow.h \
     sortinggameplayer.h \
     sortinggamewindow.h \
