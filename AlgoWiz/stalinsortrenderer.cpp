@@ -49,7 +49,6 @@ void StalinSortRenderer::runSortStep() {
     animationIsFinished = false;
 
     if(bars[currentStep].val < bars[currentStep - 1].val) {
-        qDebug() << "val: " << bars[currentStep].val << " val prev: " << bars[currentStep-1].val;
         // time to take current step bar out back
         bars.erase(bars.begin() + currentStep); // clear bar that is out of line.
         update();
