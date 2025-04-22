@@ -108,6 +108,8 @@ void mergeSortRenderer::runNextStep()
                 startAnimation();
             });
             return;
+        } else {
+            return;
         }
     }
 

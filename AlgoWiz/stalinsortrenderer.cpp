@@ -43,6 +43,8 @@ void StalinSortRenderer::runSortStep() {
                 this,
                 &StalinSortRenderer::runSortStep); // pause for 2 sec before running the sort again
             return;
+        } else {
+            return;
         }
     }
 

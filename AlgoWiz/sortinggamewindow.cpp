@@ -31,7 +31,8 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
 
     layout->addLayout(buttonBox);
 
-    connect(easySelection, &QPushButton::clicked, this, [=]() { emit difficultySelected(0); });
+    connect(easySelection, &QPushButton::clicked, this, [=]()
+            { emit difficultySelected(0); });
     connect(mediumSelection, &QPushButton::clicked, this, [=]()
             { emit difficultySelected(1); });
     connect(hardSelection, &QPushButton::clicked, this, [=]()
@@ -40,6 +41,7 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     playerController = new sortingGamePlayer(this);
 
     aiPlayer = new InsertionSortRenderer(); // set to easy mode by default
+    aiPlayer->setLooping(false);
 
     layout->addWidget(aiPlayer);
 
@@ -49,13 +51,19 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
 void SortingGameWindow::handleDifficultySelection(int difficulty)
 {
     delete aiPlayer; // clear out previous difficulty selection
-    if (difficulty == 0) {
+    if (difficulty == 0)
+    {
         aiPlayer = new InsertionSortRenderer();
-    } else if (difficulty == 1) {
+    }
+    else if (difficulty == 1)
+    {
         aiPlayer = new mergeSortRenderer();
-    } else {
+    }
+    else
+    {
         aiPlayer = new StalinSortRenderer();
     }
 
+    aiPlayer->setLooping(false);
     layout->addWidget(aiPlayer);
 }

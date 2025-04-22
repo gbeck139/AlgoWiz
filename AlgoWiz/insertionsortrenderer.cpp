@@ -25,6 +25,8 @@ void InsertionSortRenderer::runSortStep()
                 this,
                 &InsertionSortRenderer::runSortStep); // pause for 2 sec before running the sort again
             return;
+        } else {
+            return;
         }
     }
 

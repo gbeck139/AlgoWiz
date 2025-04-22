@@ -85,3 +85,8 @@ bool sortingAlgoRenderer::isAnimationFinished()
 {
     return animationIsFinished;
 }
+
+void sortingAlgoRenderer::setLooping(bool loops)
+{
+    looping = loops;
+}

@@ -10,6 +10,7 @@ public:
     explicit sortingAlgoRenderer(QWidget *parent = nullptr);
     sortingAlgoRenderer(QWidget *parent, bool looping);
     bool isAnimationFinished();
+    void setLooping(bool loops);
 
 protected:
     struct bar
