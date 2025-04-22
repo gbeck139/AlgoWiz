@@ -66,6 +66,7 @@ SOURCES += \
     graphtheorywindow.cpp \
     insertionsortrenderer.cpp \
     insertionsortwindow.cpp \
+    lessonwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     mergesortrenderer.cpp \
@@ -135,6 +136,7 @@ HEADERS += \
     graphgamewindow.h \
     graphtheorywindow.h \
     insertionsortwindow.h \
+    lessonwindow.h \
     mainwindow.h \
     mergesortrenderer.h \
     mergesortwindow.h \

@@ -5,7 +5,8 @@
 GraphAlgoRenderer::GraphAlgoRenderer(QWidget* parent): QWidget(parent) {
 
    // Set up graph
-    setMinimumSize(800, 800);
+    setMinimumSize(1200, 1200);
+
 }
 
 void GraphAlgoRenderer::paintEvent(QPaintEvent *)
@@ -13,8 +14,13 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
+    const int shiftX = width()  / 6;   // e.g. one‑sixth of total canvas
+    const int shiftY = height() / 8;   // e.g. one‑eighth of total canvas
+
+    painter.translate(shiftX, shiftY);
+
     // Draw edges
-    painter.setPen(QPen(Qt::black, 2));
+    painter.setPen(QPen(Qt::white, 2));
     for (const Edge& edge : edges) {
         if (nodes.contains(edge.from) && nodes.contains(edge.to)) {
             painter.setPen(QPen(Qt::black, 2));
@@ -36,7 +42,7 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
         const Node& node = it.value();
 
         painter.setBrush(node.color);
-        painter.setPen(Qt::black);
+        painter.setPen(Qt::white);
         painter.drawEllipse(node.pos, 20, 20);
         painter.drawText(node.pos + QPoint(-25, -25), id);
         if (node.hasValue){

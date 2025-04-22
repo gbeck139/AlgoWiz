@@ -2,6 +2,17 @@
     <qresource prefix="/images">
         <file>AlgoWiz wizard.png</file>
         <file>wizard.png</file>
+        <file>colorfulWizard.png</file>
+        <file>lightningWizard.png</file>
+        <file>blueWizard.png</file>
+        <file>heavenlyWizard.png</file>
+        <file>darkWizard.png</file>
+        <file>oldWizard.png</file>
+        <file>greenWizard.png</file>
+        <file>spellWizard.png</file>
+        <file>purpleWizard.png</file>
+        <file>smokeWizard.png</file>
+        <file>stalinWizard.png</file>
     </qresource>
     <qresource prefix="/audios">
         <file>cool.mp3</file>
