@@ -34,7 +34,7 @@ BinarySearchWindow::BinarySearchWindow(QWidget *parent) : QWidget(parent) {
     nextButton = new QPushButton("Ready to take a quiz", this);
     layout->addWidget(nextButton);
     connect(nextButton, &QPushButton::clicked, [this]() {
-        quizWindow->binarySearchQuiz();
+        quizWindow->BinarySearchQuiz();
         quizWindow->show();
         this->hide();
     });

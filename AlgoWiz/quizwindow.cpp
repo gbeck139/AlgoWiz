@@ -39,7 +39,110 @@ QuizWindow::QuizWindow(QWidget *parent)
     connect(optionsGroup, &QButtonGroup::idClicked, this, &QuizWindow::checkAnswer);
 }
 
-void QuizWindow::binarySearchQuiz() {
+
+void QuizWindow::DijkstraQuiz(){
+    setWindowTitle("Dijkstra quiz");
+
+    //Set the question
+    quizLabel->setText("Quesiton?");
+
+    //Set the option
+    optionA->setText("A)");
+    optionB->setText("B)");
+    optionC->setText("C)");
+    optionD->setText("D)");
+
+    correctAnswerIndex = 0;
+
+    resultLabel->clear();
+}
+
+void QuizWindow::MergeSortQuiz(){
+    setWindowTitle("Dijkstra quiz");
+
+    //Set the question
+    quizLabel->setText("Quesiton?");
+
+    //Set the option
+    optionA->setText("A)");
+    optionB->setText("B)");
+    optionC->setText("C)");
+    optionD->setText("D)");
+
+    correctAnswerIndex = 0;
+
+    resultLabel->clear();
+}
+
+void QuizWindow::DFSQuiz(){
+    setWindowTitle("Dijkstra quiz");
+
+    //Set the question
+    quizLabel->setText("Quesiton?");
+
+    //Set the option
+    optionA->setText("A)");
+    optionB->setText("B)");
+    optionC->setText("C)");
+    optionD->setText("D)");
+
+    correctAnswerIndex = 0;
+
+    resultLabel->clear();
+}
+
+void QuizWindow::BFSQuiz(){
+    setWindowTitle("Dijkstra quiz");
+
+    //Set the question
+    quizLabel->setText("Quesiton?");
+
+    //Set the option
+    optionA->setText("A)");
+    optionB->setText("B)");
+    optionC->setText("C)");
+    optionD->setText("D)");
+
+    correctAnswerIndex = 0;
+
+    resultLabel->clear();
+}
+
+void QuizWindow::InsertionSortQuiz(){
+    setWindowTitle("Dijkstra quiz");
+
+    //Set the question
+    quizLabel->setText("Quesiton?");
+
+    //Set the option
+    optionA->setText("A)");
+    optionB->setText("B)");
+    optionC->setText("C)");
+    optionD->setText("D)");
+
+    correctAnswerIndex = 0;
+
+    resultLabel->clear();
+}
+
+void QuizWindow::StalinSortQuiz(){
+    setWindowTitle("Dijkstra quiz");
+
+    //Set the question
+    quizLabel->setText("Quesiton?");
+
+    //Set the option
+    optionA->setText("A)");
+    optionB->setText("B)");
+    optionC->setText("C)");
+    optionD->setText("D)");
+
+    correctAnswerIndex = 0;
+
+    resultLabel->clear();
+}
+
+void QuizWindow::BinarySearchQuiz() {
     setWindowTitle("BinarySearch quiz");
 
     //Set the question

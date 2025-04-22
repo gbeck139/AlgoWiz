@@ -13,8 +13,13 @@ class QuizWindow : public QWidget {
 
 public:
     QuizWindow(QWidget *parent = nullptr);
-
-    void binarySearchQuiz();
+    void DijkstraQuiz();
+    void MergeSortQuiz();
+    void DFSQuiz();
+    void BFSQuiz();
+    void InsertionSortQuiz();
+    void StalinSortQuiz();
+    void BinarySearchQuiz();
 
 private slots:
     void checkAnswer(int id);
