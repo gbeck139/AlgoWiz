@@ -11,8 +11,10 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     : QWidget(parent)
 {
     setWindowTitle("Sorting Game");
-    resize(400, 300);
+    resize(800, 800);
     layout = new QVBoxLayout();
+
+    // signal from here to
 
     connect(this,
             &SortingGameWindow::difficultySelected,
@@ -45,7 +47,7 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     aiPlayer->setLooping(false);
 
     QLabel *aiLabel = new QLabel("AI Player");
-    QLabel *playerLabel = new QLabel("Your Turn - Click and Drag to Sort");
+    QLabel *playerLabel = new QLabel("Sort the bars below! Beat the sorting algorithm!");
 
     QFont labelFont = aiLabel->font();
     labelFont.setBold(true);
@@ -99,10 +101,13 @@ void SortingGameWindow::handleDifficultySelection(int difficulty)
     // Insert the AI player at index 2 (after the buttons and AI label)
     layout->insertWidget(2, aiPlayer);
 
-    // Check periodically if AI has finished
+    // check every 100ms if AI won to handle displaying message
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &SortingGameWindow::checkAIProgress);
+
     timer->start(100); // Check every 100ms
+
+    playerController->resetGame();
 }
 
 void SortingGameWindow::checkAIProgress()
@@ -114,12 +119,7 @@ void SortingGameWindow::checkAIProgress()
         {
             aiFinished = true;
             // Check if player also finished
-            if (playerFinished)
-            {
-                gameResultLabel->setText("It's a tie!");
-            }
-            else
-            {
+            if (!playerFinished) {
                 gameResultLabel->setText("AI won the race!");
             }
         }
@@ -137,10 +137,11 @@ void SortingGameWindow::checkAIProgress()
 void SortingGameWindow::handlePlayerFinished()
 {
     playerFinished = true;
+    qDebug() << "Playerfinished is true, ai finished is:" << aiFinished;
 
     if (aiFinished)
     {
-        gameResultLabel->setText("It's a tie!");
+        gameResultLabel->setText("You lost");
     }
     else
     {

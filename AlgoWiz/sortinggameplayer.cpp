@@ -6,6 +6,20 @@
 sortingGamePlayer::sortingGamePlayer(QWidget *parent)
     : sortingAlgoRenderer(parent, false)
 {
+    // clear the vector, loop through
+    bars.clear();
+
+    // put 20 bar structs in the bars vector
+    for (int i = 5; i <= 25; i++) {
+        bar b;
+        b.val = i;
+        b.color = defaultColor;
+
+        bars.push_back(b);
+    }
+
+    largestBar = 25; // hardcoded to our loop
+
     setWindowTitle("Sorting Game");
     resize(600, 500);
     resetGame();
@@ -13,13 +27,12 @@ sortingGamePlayer::sortingGamePlayer(QWidget *parent)
 
 void sortingGamePlayer::resetGame()
 {
-    // Reset the bar colors
-    for (size_t i = 0; i < bars.size(); ++i)
-    {
+    // reset all bar colors
+    for (size_t i = 0; i < bars.size(); ++i) {
         setBarColor(i, defaultColor);
     }
 
-    // Shuffle the bars
+    // shuffle bars
     shuffle();
     update();
 }
@@ -33,7 +46,7 @@ void sortingGamePlayer::mousePressEvent(QMouseEvent *event)
         {
             dragStartPosition = event->pos();
             dragging = true;
-            setBarColor(draggedBarIndex, Qt::red); // Highlight selected bar
+            setBarColor(draggedBarIndex, Qt::red); // highlight user slected bar
             update();
         }
     }
@@ -43,25 +56,24 @@ void sortingGamePlayer::mouseMoveEvent(QMouseEvent *event)
 {
     if (dragging && draggedBarIndex != -1)
     {
-        // Calculate which position we're hovering over
+        // find out which position we're "hovering" over
         targetIndex = getBarIndexAt(event->pos());
 
-        // Update visual feedback
         for (size_t i = 0; i < bars.size(); ++i)
         {
             if (i == draggedBarIndex)
             {
-                // Keep selected bar highlighted
+                // highlight selected bar
                 setBarColor(i, Qt::red);
             }
             else if (i == targetIndex)
             {
-                // Highlight potential drop target
+                // highlight where we would be potentially placing the bar
                 setBarColor(i, Qt::blue);
             }
             else
             {
-                // Reset other bars to default
+                // reset other bars to our default color
                 setBarColor(i, defaultColor);
             }
         }
@@ -75,16 +87,16 @@ void sortingGamePlayer::mouseReleaseEvent(QMouseEvent *event)
     {
         targetIndex = getBarIndexAt(event->pos());
 
-        // Only move if we have a valid target and it's different from source
+        // we can only move if target is valid and we're actually moving it somewhere
         if (targetIndex != -1 && targetIndex != draggedBarIndex)
         {
-            // Move the bar to the new position
+            // move bar struct
             bar temp = bars[draggedBarIndex];
 
-            // Shift bars between source and target
+            // shift everything accordingly
             if (targetIndex > draggedBarIndex)
             {
-                // Moving right
+                // this is for shifting right
                 for (int i = draggedBarIndex; i < targetIndex; ++i)
                 {
                     bars[i] = bars[i + 1];
@@ -92,29 +104,29 @@ void sortingGamePlayer::mouseReleaseEvent(QMouseEvent *event)
             }
             else
             {
-                // Moving left
+                // shifting left
                 for (int i = draggedBarIndex; i > targetIndex; --i)
                 {
                     bars[i] = bars[i - 1];
                 }
             }
 
-            // Place dragged bar at target position
+            // drop bar at target
             bars[targetIndex] = temp;
         }
 
-        // Reset all bars to default color
+        // reset bar color
         for (size_t i = 0; i < bars.size(); ++i)
         {
             setBarColor(i, defaultColor);
         }
 
-        // Check if the array is sorted
+        // check if sorted, if sorted, we turn it green and emit a signal
         if (checkIfSorted())
         {
             for (size_t i = 0; i < bars.size(); ++i)
             {
-                setBarColor(i, Qt::green); // All green when sorted
+                setBarColor(i, Qt::green);
             }
             emit playerFinished();
         }
@@ -152,9 +164,4 @@ bool sortingGamePlayer::checkIfSorted()
         }
     }
     return true;
-}
-
-bool sortingGamePlayer::isSorted()
-{
-    return checkIfSorted();
 }

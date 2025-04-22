@@ -80,7 +80,7 @@ void mergeSortRenderer::merge(int left, int mid, int right)
     update();
 
     // Reset colors and continue to next step after a delay
-    QTimer::singleShot(1000, this, [=]() {
+    QTimer::singleShot(2000, this, [=]() {
         // Reset colors
         setBarColor(left, defaultColor);
         setBarColor(mid, defaultColor);

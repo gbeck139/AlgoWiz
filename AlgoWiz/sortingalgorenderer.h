@@ -9,8 +9,9 @@ class sortingAlgoRenderer : public QWidget
 public:
     explicit sortingAlgoRenderer(QWidget *parent = nullptr);
     sortingAlgoRenderer(QWidget *parent, bool looping);
-    bool isAnimationFinished();
+    bool Finished();
     void setLooping(bool loops);
+    bool isAnimationFinished();
 
 protected:
     struct bar

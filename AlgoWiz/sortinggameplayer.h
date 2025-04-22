@@ -11,7 +11,7 @@ class sortingGamePlayer : public sortingAlgoRenderer
     Q_OBJECT
 public:
     explicit sortingGamePlayer(QWidget *parent = nullptr);
-    bool isSorted();
+    void resetGame();
 
 signals:
     void playerFinished();
@@ -26,7 +26,6 @@ private:
     QPoint dragStartPosition;
     bool dragging = false;
     int targetIndex = -1;
-    void resetGame();
     int getBarIndexAt(const QPoint &pos);
     bool checkIfSorted();
 };

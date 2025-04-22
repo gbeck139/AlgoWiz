@@ -38,10 +38,7 @@ void StalinSortRenderer::runSortStep() {
             shuffle();
             setBarColor(0, Qt::red);
             // run the animation on sort.
-            QTimer::singleShot(
-                1000,
-                this,
-                &StalinSortRenderer::runSortStep); // pause for 2 sec before running the sort again
+            QTimer::singleShot(1000, this, &StalinSortRenderer::runSortStep);
             return;
         } else {
             return;
@@ -55,19 +52,17 @@ void StalinSortRenderer::runSortStep() {
         bars.erase(bars.begin() + currentStep); // clear bar that is out of line.
         update();
         QTimer::singleShot(
-            200,
+            1000,
             this,
-            &StalinSortRenderer::runSortStep); // continue on without incrementing current step since we decreased size of vector.
+            &StalinSortRenderer::
+                runSortStep); // continue on without incrementing current step since we decreased size of vector.
         return;
     }
     else {
         setBarColor(currentStep, Qt::red); // set bar to red to show we've looked at it.
         currentStep++;
         update();
-        QTimer::singleShot(
-            200,
-            this,
-            &StalinSortRenderer::runSortStep);
+        QTimer::singleShot(1000, this, &StalinSortRenderer::runSortStep);
         return;
     }
 }
