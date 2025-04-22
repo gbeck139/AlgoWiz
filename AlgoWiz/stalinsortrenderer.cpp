@@ -51,18 +51,25 @@ void StalinSortRenderer::runSortStep() {
         // time to take current step bar out back
         bars.erase(bars.begin() + currentStep); // clear bar that is out of line.
         update();
-        QTimer::singleShot(
-            1000,
-            this,
-            &StalinSortRenderer::
-                runSortStep); // continue on without incrementing current step since we decreased size of vector.
+        if (looping) {
+            QTimer::singleShot(500, this, &StalinSortRenderer::runSortStep);
+        } else { // this else is for human player vs ai, to make it "possible" to beat
+            QTimer::singleShot(1500, this, &StalinSortRenderer::runSortStep);
+        }
+
         return;
     }
     else {
         setBarColor(currentStep, Qt::red); // set bar to red to show we've looked at it.
         currentStep++;
         update();
-        QTimer::singleShot(1000, this, &StalinSortRenderer::runSortStep);
+
+        if (looping) {
+            QTimer::singleShot(500, this, &StalinSortRenderer::runSortStep);
+        } else { // this else is for human player vs ai, to make it "possible" to beat
+            QTimer::singleShot(1500, this, &StalinSortRenderer::runSortStep);
+        }
+
         return;
     }
 }
