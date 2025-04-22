@@ -3,13 +3,13 @@
 
 #include <QWidget>
 
-
 class sortingAlgoRenderer : public QWidget
 {
     Q_OBJECT
 public:
-    explicit sortingAlgoRenderer(QWidget* parent = nullptr);
-    sortingAlgoRenderer(std::vector<int> vec);
+    explicit sortingAlgoRenderer(QWidget *parent = nullptr);
+    sortingAlgoRenderer(QWidget *parent, bool looping);
+    bool isAnimationFinished();
 
 protected:
     struct bar
@@ -27,14 +27,13 @@ protected:
 
     void shuffle();
 
-    void displayBars();
-
     void setBarColor(int idx, QColor color);
 
-    void startAnimation();
+    void paintEvent(QPaintEvent *event) override;
 
-    void paintEvent(QPaintEvent* event) override;
+    bool looping = true;
 
+    bool animationIsFinished = false;
 };
 
 #endif // SORTINGALGORENDERER_H

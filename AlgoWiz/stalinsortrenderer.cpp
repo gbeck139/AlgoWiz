@@ -28,20 +28,25 @@ void StalinSortRenderer::startAnimation()
 }
 
 void StalinSortRenderer::runSortStep() {
-    // done sorting
-    if (currentStep >= (int) bars.size()) {
-        currentStep = 1;
-        restoreList();
-        update();
-        shuffle();
-        setBarColor(0, Qt::red);
-        // run the animation on sort.
-        QTimer::singleShot(
-            1000,
-            this,
-            &StalinSortRenderer::runSortStep); // pause for 2 sec before running the sort again
-        return;
+    if (currentStep >= (int) bars.size()) { // done sorting
+
+        animationIsFinished = true;
+        if (looping) {
+            currentStep = 1;
+            restoreList();
+            update();
+            shuffle();
+            setBarColor(0, Qt::red);
+            // run the animation on sort.
+            QTimer::singleShot(
+                1000,
+                this,
+                &StalinSortRenderer::runSortStep); // pause for 2 sec before running the sort again
+            return;
+        }
     }
+
+    animationIsFinished = false;
 
     if(bars[currentStep].val < bars[currentStep - 1].val) {
         qDebug() << "val: " << bars[currentStep].val << " val prev: " << bars[currentStep-1].val;

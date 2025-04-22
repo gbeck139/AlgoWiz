@@ -7,24 +7,25 @@ InsertionSortRenderer::InsertionSortRenderer()
     startAnimation();
 }
 
-// the vector is sorted very quickly, and we want to watch it happen slowly
-// the vector internals are changed extremely quickly, can't sync the view with our vector...
-
 void InsertionSortRenderer::runSortStep()
 {
     // case: done sorting
+    animationIsFinished = false;
     if (currentStep >= (int) bars.size()) {
         stepInProgress = false;
-        currentStep = 1;
-        whileStep = 0;
-        update();
-        shuffle();
-        // run the animation on sort.
-        QTimer::singleShot(
-            2000,
-            this,
-            &InsertionSortRenderer::runSortStep); // pause for 2 sec before running the sort again
-        return;
+        animationIsFinished = true; // true because at this point the animation is in the sorted state
+        if (looping) {
+            currentStep = 1;
+            whileStep = 0;
+            update();
+            shuffle();
+            // run the animation on sort.
+            QTimer::singleShot(
+                2000,
+                this,
+                &InsertionSortRenderer::runSortStep); // pause for 2 sec before running the sort again
+            return;
+        }
     }
 
     // new outer loop iteration is occuring

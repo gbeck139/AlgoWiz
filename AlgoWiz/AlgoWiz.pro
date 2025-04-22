@@ -72,6 +72,7 @@ SOURCES += \
     sortingalgorenderer.cpp \
     mergesortwindow.cpp \
     runtimewindow.cpp \
+    sortinggameplayer.cpp \
     sortinggamewindow.cpp \
     stalinsortrenderer.cpp \
     stalinsortwindow.cpp
@@ -137,6 +138,7 @@ HEADERS += \
     mergesortrenderer.h \
     mergesortwindow.h \
     runtimewindow.h \
+    sortinggameplayer.h \
     sortinggamewindow.h \
     stalinsortrenderer.h \
     stalinsortwindow.h \

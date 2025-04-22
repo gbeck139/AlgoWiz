@@ -100,8 +100,15 @@ void mergeSortRenderer::merge(int left, int mid, int right)
 void mergeSortRenderer::runNextStep()
 {
     if (mergeQueue.empty()) {
-        startAnimation();
-        return;
+        animationIsFinished = true;
+
+        if (looping) {
+            QTimer::singleShot(500, this, [=]() {
+                animationIsFinished = false;
+                startAnimation();
+            });
+            return;
+        }
     }
 
     // pop and animate?

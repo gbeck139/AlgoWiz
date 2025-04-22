@@ -3,8 +3,25 @@
 #include <random>
 #include <QPainter>
 
-sortingAlgoRenderer::sortingAlgoRenderer(QWidget* parent): QWidget(parent)
+sortingAlgoRenderer::sortingAlgoRenderer(QWidget *parent) : QWidget(parent)
 {
+    // put 20 bar structs in the bars vector
+    for (int i = 1; i <= 20; i++)
+    {
+        bar b;
+        b.val = i;
+        b.color = defaultColor;
+
+        bars.push_back(b);
+    }
+
+    largestBar = 20; // hardcoded to our loop
+}
+
+sortingAlgoRenderer::sortingAlgoRenderer(QWidget *parent, bool looping)
+    : QWidget(parent)
+{
+    this->looping = looping;
     // put 20 bar structs in the bars vector
     for (int i = 1; i <= 20; i++) {
         bar b;
@@ -15,38 +32,13 @@ sortingAlgoRenderer::sortingAlgoRenderer(QWidget* parent): QWidget(parent)
     }
 
     largestBar = 20; // hardcoded to our loop
-
-    startAnimation();
-}
-
-sortingAlgoRenderer::sortingAlgoRenderer(std::vector<int> vec)
-{
-    largestBar = 0;
-
-    for (int i : vec) {
-        bar b;
-        b.val = i;
-        b.color = defaultColor;
-
-        if (i > largestBar) {
-            largestBar = i;
-        }
-
-        bars.push_back(b);
-    }
-
-    startAnimation();
 }
 
 void sortingAlgoRenderer::shuffle()
 {
-    auto rng = std::default_random_engine{};
+    std::random_device rd;
+    auto rng = std::default_random_engine{rd()};
     std::shuffle(std::begin(bars), std::end(bars), rng);
-}
-
-void sortingAlgoRenderer::displayBars()
-{
-    update(); // refresh drawing of widget
 }
 
 void sortingAlgoRenderer::paintEvent(QPaintEvent *)
@@ -58,12 +50,14 @@ void sortingAlgoRenderer::paintEvent(QPaintEvent *)
     int widgetHeight = height();
 
     int numBars = static_cast<int>(bars.size());
-    if (numBars == 0 || largestBar == 0) return;
+    if (numBars == 0 || largestBar == 0)
+        return;
 
     double barWidth = static_cast<double>(widgetWidth) / numBars;
 
-    for (int i = 0; i < numBars; ++i) { // draw the bars
-        const bar& bar = bars[i];
+    for (int i = 0; i < numBars; ++i)
+    { // draw the bars
+        const bar &bar = bars[i];
 
         double normalizedHeight = static_cast<double>(bar.val) / largestBar;
         int barHeightPx = static_cast<int>(normalizedHeight * widgetHeight);
@@ -82,13 +76,12 @@ void sortingAlgoRenderer::paintEvent(QPaintEvent *)
 void sortingAlgoRenderer::setBarColor(int idx, QColor color)
 {
     // set the bar at idx to color
-    if (bars.size() > idx && idx >= 0) {
+    if ((int) bars.size() > idx && idx >= 0) {
         bars[idx].color = color;
     }
 }
 
-// helper: display bars, start a QTimer
-void sortingAlgoRenderer::startAnimation()
+bool sortingAlgoRenderer::isAnimationFinished()
 {
-    // run sort function, which sets up qtimer singleshots for each step then qtimer singleshot for recalling start animation.
+    return animationIsFinished;
 }
