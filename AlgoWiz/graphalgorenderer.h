@@ -9,9 +9,10 @@ class GraphAlgoRenderer : public QWidget
 public:
     explicit GraphAlgoRenderer(QWidget* parent = nullptr);
 
-    void addNode(const QString& id, const QPoint& position);
+    void addNode(const QString& id, const QPoint& position, bool hasValue, int value = 0);
     void addEdge(const QString& from, const QString& to, bool weighted, int weight = 0);
     void setNodeColor(const QString& id, const QColor& color);
+    void setNodeValue(const QString& id, int value);
     void setEdgeColor(int id, const QColor& color);
     void createUnweightedGraph();
     void createTheoryGraph();
@@ -25,6 +26,8 @@ protected:
     struct Node {
         QPoint pos;
         QColor color = Qt::black;
+        bool hasValue;
+        int value;
     };
 
     struct Edge {

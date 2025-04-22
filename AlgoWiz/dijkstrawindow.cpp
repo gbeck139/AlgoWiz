@@ -13,5 +13,9 @@ DijkstraWindow::DijkstraWindow(QWidget *parent) : QWidget(parent) {
 
     renderer->createWeightedGraph();
 
-    renderer->runTraversalAnimation({"A", "_1", "_0", "B", "_2", "_3", "D", "_5", "_4", "E", "_6", "_8", "F", "_7", "C"});
+    renderer->runTraversalAnimation({"A", "_0", ".B.2", "_1", ".D.8",
+                                     "B", "_2", ".D.7", "_3", ".E.8",
+                                     "D", "_5", ".F.9", "_4",
+                                     "E", "_6", "_8", ".C.17",
+                                     "F", "_7", "C"});
 }
