@@ -51,7 +51,7 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
 
     QFont labelFont = aiLabel->font();
     labelFont.setBold(true);
-    labelFont.setPointSize(12);
+    labelFont.setPointSize(25);
     aiLabel->setFont(labelFont);
     playerLabel->setFont(labelFont);
 
@@ -64,6 +64,11 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     layout->addWidget(playerController);
 
     gameResultLabel = new QLabel("");
+
+    QFont font = gameResultLabel->font();
+    font.setPointSize(30);
+    gameResultLabel->setFont(font);
+
     gameResultLabel->setAlignment(Qt::AlignCenter);
     layout->addWidget(gameResultLabel);
 
@@ -142,9 +147,8 @@ void SortingGameWindow::handlePlayerFinished()
     if (aiFinished)
     {
         gameResultLabel->setText("You lost");
-    }
-    else
-    {
+
+    } else {
         gameResultLabel->setText("You won the race!");
     }
 }
