@@ -5,6 +5,9 @@
 #include <QMainWindow>
 #include <dfswindow.h>
 #include <runtimewindow.h>
+#include <QGuiApplication> // for automatic resizing of window
+#include <QScreen>
+#include <QRect>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +29,7 @@ private:
 
     // Set style for buttons
     void setStyle(QPushButton* btn);
+    void adjustWindowSize(QWidget* window, int &newWidth, int &newHeight);
 
 public slots:
 
