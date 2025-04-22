@@ -23,7 +23,8 @@ sortingAlgoRenderer::sortingAlgoRenderer(QWidget *parent, bool looping)
 {
     this->looping = looping;
     // put 20 bar structs in the bars vector
-    for (int i = 1; i <= 20; i++) {
+    for (int i = 1; i <= 20; i++)
+    {
         bar b;
         b.val = i;
         b.color = defaultColor;
@@ -76,7 +77,8 @@ void sortingAlgoRenderer::paintEvent(QPaintEvent *)
 void sortingAlgoRenderer::setBarColor(int idx, QColor color)
 {
     // set the bar at idx to color
-    if ((int) bars.size() > idx && idx >= 0) {
+    if ((int)bars.size() > idx && idx >= 0)
+    {
         bars[idx].color = color;
     }
 }

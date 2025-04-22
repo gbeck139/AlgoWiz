@@ -43,7 +43,10 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     aiPlayer = new InsertionSortRenderer(); // set to easy mode by default
     aiPlayer->setLooping(false);
 
+    playerController = new sortingGamePlayer();
+
     layout->addWidget(aiPlayer);
+    layout->addWidget(playerController);
 
     setLayout(layout);
 }
