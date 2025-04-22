@@ -7,15 +7,11 @@
 #include <QMainWindow>
 #include <dfswindow.h>
 #include <runtimewindow.h>
-<<<<<<< HEAD
 #include <QVector>
 #include <QLabel>
-
-=======
 #include <QGuiApplication> // for automatic resizing of window
 #include <QScreen>
 #include <QRect>
->>>>>>> windowResize
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
