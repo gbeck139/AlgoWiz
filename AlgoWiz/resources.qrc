@@ -14,6 +14,9 @@
         <file>smokeWizard.png</file>
         <file>stalinWizard.png</file>
         <file>runtime.jpg</file>
+        <file>bookWizard.png</file>
+        <file>snowWizard.png</file>
+        <file>vikingWizard.png</file>
     </qresource>
     <qresource prefix="/audios">
         <file>cool.mp3</file>
