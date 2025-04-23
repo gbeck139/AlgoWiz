@@ -1,6 +1,7 @@
 #include "graphalgorenderer.h"
 #include <QPainter>
 #include <QTimer>
+#include <QMouseEvent>
 
 GraphAlgoRenderer::GraphAlgoRenderer(QWidget* parent): QWidget(parent) {
 
@@ -85,7 +86,7 @@ void GraphAlgoRenderer::runTraversalAnimation(const QVector<QString> &traversalO
             });
         }else {
             QTimer::singleShot(i * delayMs, this, [=]() {
-                setNodeColor(traversalOrder[i], Qt::yellow);
+                setNodeColor(traversalOrder[i], Qt::green);
             });
         }
     }
@@ -200,3 +201,33 @@ void GraphAlgoRenderer::createWeightedGraph()
     addEdge("E", "C", true, 9); // 8
 }
 
+void GraphAlgoRenderer::mousePressEvent(QMouseEvent *ev)
+{
+    // Calculate the same translation that is applied during painting
+    int minX = INT_MAX, minY = INT_MAX;
+    int maxX = INT_MIN, maxY = INT_MIN;
+    for (auto &kv : nodes) {
+        const QPoint &p = kv.pos;
+        minX = qMin(minX, p.x());
+        minY = qMin(minY, p.y());
+        maxX = qMax(maxX, p.x());
+        maxY = qMax(maxY, p.y());
+    }
+    int graphW = maxX - minX;
+    int graphH = maxY - minY;
+
+    // Compute the same shift as in paintEvent
+    int shiftX = (width() - graphW) / 2 - minX;
+    int shiftY = (height() - graphH) / 2 - minY;
+
+    // Adjust click position by subtracting the shifts
+    QPoint adjustedPos = ev->pos() - QPoint(shiftX, shiftY);
+
+    // Now check if the adjusted position is inside any node
+    for (auto it = nodes.begin(); it != nodes.end(); ++it) {
+        if (QLineF(adjustedPos, it.value().pos).length() <= 20) { // 20 is the node radius
+            emit nodeClicked(it.key());
+            break;
+        }
+    }
+}

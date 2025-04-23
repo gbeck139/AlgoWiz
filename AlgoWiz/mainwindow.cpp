@@ -13,7 +13,7 @@
 #include "bfswindow.h"
 #include "binarysearchwindow.h"
 #include "dijkstrawindow.h"
-#include "graphgamewindow.h"
+#include "graphbfsgamewindow.h"
 #include "graphtheorywindow.h"
 #include "insertionsortwindow.h"
 #include "mergesortwindow.h"
@@ -266,8 +266,8 @@ MainWindow::MainWindow(QWidget *parent)
 
         // Graph Game (no banner text)
         []() {
-            return new LessonWindow(new GraphGameWindow,
-                                    ":/images/vikingWizard.png");
+            return new LessonWindow(new GraphBFSGameWindow,
+                ":/images/vikingWizard.png");
         }
     };
 

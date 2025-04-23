@@ -20,9 +20,6 @@ public:
 
     void runTraversalAnimation(const QVector<QString>& traversalOrder, int delayMs = 1000);
 
-protected:
-    void paintEvent(QPaintEvent* event) override;
-
     struct Node {
         QPoint pos;
         QColor color = Qt::black;
@@ -40,6 +37,15 @@ protected:
 
     QMap<QString, Node> nodes;
     QVector<Edge> edges;
+
+
+signals:
+    void nodeClicked(const QString &id);
+
+protected:
+    void paintEvent(QPaintEvent* event) override;
+    void mousePressEvent(QMouseEvent *ev) override;
+
 
     const QRgb orange = 0xff8c00;
     QColor defaultColor = QColor(orange);
