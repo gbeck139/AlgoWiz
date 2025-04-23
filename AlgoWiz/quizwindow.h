@@ -23,19 +23,27 @@ public:
 
 private slots:
     void checkAnswer(int id);
+    void showRandomQuiz();
+    void showQuizWidgets();
+    void initializeQuizzes();
 
 private:
+    QLabel *introLabel;
+    QPushButton *startQuizButton;
+    QPushButton *nextQuizButton;
     QLabel *quizLabel;
     QLabel *resultLabel;
-
     QVBoxLayout *layout;
     QRadioButton *optionA;
     QRadioButton *optionB;
     QRadioButton *optionC;
     QRadioButton *optionD;
     QButtonGroup *optionsGroup;
-
     int correctAnswerIndex;
+    QList<std::function<void()>> allQuizzes;
+    QList<int> remainingIndices;
+    QFont optionFont;
+    int score = 0;
 };
 
 #endif // QUIZWINDOW_H

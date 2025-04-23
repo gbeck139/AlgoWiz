@@ -31,13 +31,13 @@ BinarySearchWindow::BinarySearchWindow(QWidget *parent) : QWidget(parent) {
     layout->addWidget(renderer);
 
     // Quiz button.
-    nextButton = new QPushButton("Ready to take a quiz", this);
-    layout->addWidget(nextButton);
-    connect(nextButton, &QPushButton::clicked, [this]() {
-        quizWindow->BinarySearchQuiz();
-        quizWindow->show();
-        this->hide();
-    });
+    //nextButton = new QPushButton("Ready to take a quiz", this);
+    //layout->addWidget(nextButton);
+    //connect(nextButton, &QPushButton::clicked, [this]() {
+        //quizWindow->BinarySearchQuiz();
+        //quizWindow->show();
+        //this->hide();
+    //});
 
     // Set the layout
     setLayout(layout);

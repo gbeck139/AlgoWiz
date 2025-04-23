@@ -17,6 +17,7 @@
 #include "graphtheorywindow.h"
 #include "insertionsortwindow.h"
 #include "mergesortwindow.h"
+#include "quizwindow.h"
 #include "sortinggamewindow.h"
 #include "stalinsortwindow.h"
 #include "ui_mainwindow.h"
@@ -55,8 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->bfsWindowButton->setGeometry(newWidth/8.5 + 440, newHeight/1.5 + 100, 150, 30);
     ui->dijkstraWindowButton->setGeometry(newWidth/8.5 + 440, newHeight/1.5 + 140, 150, 30);
 
-    ui->sortingGameWindowButton->setGeometry(newWidth/3.5 + 640, newHeight/1.5 + 60, 150, 30);
-    ui->graphGameWindowButton->setGeometry(newWidth/3.5 + 640, newHeight/1.5 + 120, 150, 30);
+    ui->practiceQuizWindowButton->setGeometry(newWidth/3.5 + 640, newHeight/1.5 + 60, 150, 30);
+    ui->sortingGameWindowButton->setGeometry(newWidth/3.5 + 640, newHeight/1.5 + 100, 150, 30);
+    ui->graphGameWindowButton->setGeometry(newWidth/3.5 + 640, newHeight/1.5 + 140, 150, 30);
 
     ui->label->setGeometry(newWidth/2.3, -350, 1000, 1000);
     ui->progressBar->setGeometry(newWidth/2.8, newHeight/20, 500, 100);
@@ -73,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
                                         ui->bfsWindowButton,
                                         ui->dijkstraWindowButton,
                                         ui->binarySearchWindowButton,
+                                        ui->practiceQuizWindowButton,
                                         ui->sortingGameWindowButton,
                                         ui->graphGameWindowButton};
 
@@ -135,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         // Insertion Sort
         []() {
-            auto *lesson = new LessonWindow(new InsertionSortRenderer,
+            auto *lesson = new LessonWindow(new InsertionSortWindow,
                                             ":/images/heavenlyWizard.png");
             lesson->setBannerText(
                 "Insertion Sort \n\n"
@@ -244,6 +247,12 @@ MainWindow::MainWindow(QWidget *parent)
                 "- Best: O(1), Average/Worst: O(log n)"
                 );
             return lesson;
+        },
+
+        // Quiz (no banner text)
+        []() {
+            return new LessonWindow(new QuizWindow,
+                                    ":/images/");
         },
 
         // Sorting Game (no banner text)

@@ -2,9 +2,9 @@
 #define BINARYSEARCHWINDOW_H
 
 #include <QWidget>
-#include <QPushButton>
+//#include <QPushButton>
 #include "binarysearchrenderer.h"
-#include "quizwindow.h"
+//#include "quizwindow.h"
 
 class BinarySearchWindow : public QWidget
 {
@@ -13,8 +13,8 @@ public:
 
 private:
     BinarySearchRenderer *renderer;
-    QPushButton *nextButton;
-    QuizWindow *quizWindow = new QuizWindow();
+    //QPushButton *nextButton;
+    //QuizWindow *quizWindow = new QuizWindow();
 };
 
 #endif // BINARYSEARCHWINDOW_H
