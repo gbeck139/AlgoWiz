@@ -255,19 +255,19 @@ MainWindow::MainWindow(QWidget *parent)
         // Quiz (no banner text)
         []() {
             return new LessonWindow(new QuizWindow,
-                                    ":/images/");
+                                    ":/images/bookWizard");
         },
 
         // Sorting Game (no banner text)
         []() {
             return new LessonWindow(new SortingGameWindow,
-                                    ":/images/wizard_sortgame.png");
+                                    ":/images/snowWizard.png");
         },
 
         // Graph Game (no banner text)
         []() {
             return new LessonWindow(new GraphGameWindow,
-                                    ":/images/wizard_graphgame.png");
+                                    ":/images/vikingWizard.png");
         }
     };
 
