@@ -4,9 +4,8 @@
 
 GraphAlgoRenderer::GraphAlgoRenderer(QWidget* parent): QWidget(parent) {
 
-   // Set up graph
-    setMinimumSize(1200, 1200);
-
+    // Set up graph
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 void GraphAlgoRenderer::paintEvent(QPaintEvent *)
@@ -14,8 +13,23 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    const int shiftX = width()  / 6;   // e.g. one‑sixth of total canvas
-    const int shiftY = height() / 8;   // e.g. one‑eighth of total canvas
+    if (nodes.isEmpty()) return;
+
+    int minX = INT_MAX, minY = INT_MAX;
+    int maxX = INT_MIN, maxY = INT_MIN;
+    for (auto &kv : nodes) {
+        const QPoint &p = kv.pos;
+        minX = qMin(minX, p.x());
+        minY = qMin(minY, p.y());
+        maxX = qMax(maxX, p.x());
+        maxY = qMax(maxY, p.y());
+    }
+    int graphW = maxX - minX;
+    int graphH = maxY - minY;
+
+    //Compute shiftX / shiftY so the graph is centered
+    int shiftX = (width()  - graphW) / 2  -  minX;
+    int shiftY = (height() - graphH) / 2  -  minY;
 
     painter.translate(shiftX, shiftY);
 
@@ -23,7 +37,7 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
     painter.setPen(QPen(Qt::white, 2));
     for (const Edge& edge : edges) {
         if (nodes.contains(edge.from) && nodes.contains(edge.to)) {
-            painter.setPen(QPen(Qt::black, 2));
+            painter.setPen(QPen(Qt::white, 2));
             QPoint from = nodes[edge.from].pos;
             QPoint to = nodes[edge.to].pos;
             if (edge.weighted){

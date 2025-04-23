@@ -13,7 +13,7 @@ LessonWindow::LessonWindow(QWidget    *algoWidget,
                            QWidget    *parent)
     : QWidget(parent),
     contentPane(new QWidget(this)),
-    textBanner(new QLabel("What you’re about to learn …", this)),
+    textBanner(new QLabel("", this)),
     exitBtn(new QPushButton("✕", this)),
     wizardFull(wizardPng)
 {
@@ -53,7 +53,7 @@ LessonWindow::LessonWindow(QWidget    *algoWidget,
 
     auto *v = new QVBoxLayout(contentPane);
     // bump right margin so the banner never slides under the ✕
-    v->setContentsMargins(16, 48, 80, 16);
+    v->setContentsMargins(48, 48, 200, 70);
     v->setSpacing(12);
     v->addWidget(textBanner,0);
     v->addWidget(algoWidget,1);

@@ -60,7 +60,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->label->setGeometry(newWidth/2.3, -350, 1000, 1000);
     ui->progressBar->setGeometry(newWidth/2.8, newHeight/20, 500, 100);
-    ui->label_3->setGeometry(newWidth/3.3, newHeight/20, 500, 100);
+    ui->label_3->setGeometry(newWidth/3.3 - 20, newHeight/20, 500, 100);
+    ui->progressPercentLabel->setGeometry(newWidth/1.4, newHeight/20, 500, 100);
 
     // Algorithm windows and buttons
     QList<QPushButton *> algoButtons = {ui->dfsWindowButton,
@@ -77,41 +78,187 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Save as lambdas so that the animation in the window do not begin running yet
     QList<std::function<QWidget*()>> windowFactories = {
-        [](){ return new LessonWindow(new DFSWindow,
-                                       ":/images/purpleWizard.png"); },
-        [](){ return new LessonWindow(new RuntimeWindow,
-                                       ":/images/lightningWizard.png"); },
-        [](){ return new LessonWindow(new MergeSortWindow,
-                                       ":/images/darkWizard.png"); },
-        [](){
-            auto *lesson = new LessonWindow(
-                new InsertionSortRenderer,
-                ":/images/heavenlyWizard.png");
+        // DFS
+        []() {
+            auto *lesson = new LessonWindow(new DFSWindow,
+                                            ":/images/purpleWizard.png");
             lesson->setBannerText(
-                "Insertion sort: in the best case, it's O(n), in the average "
-                "and worst case, it's O(n^2). It accomplishes"
-                " its best case with a conditional inner while-loop that checks if, "
-                "in this case, the bar is already in its correct position."
-                " It grows a \"sorted\" portion at each outer loop iteration, and "
-                "then moves the rightmost bar to its proper place."
+                "Depth‑First Search (DFS)\n"
+                "Depth‑First Search (DFS) is a graph traversal algorithm that explores as far as possible along "
+                "each branch before backtracking. It uses a stack—either via recursion or an explicit stack—to "
+                "remember the path. DFS runs in O(V + E) time and requires O(V) space for the stack.\n\n"
+                "- Explores depth‑first with backtracking\n"
+                "- Uses recursion or explicit stack\n"
+                "- Time: O(V + E), Space: O(V)\n"
+                "- Good for cycle detection & topological sort\n"
+                "- Solves maze‑like puzzles"
                 );
             return lesson;
         },
-        [](){ return new LessonWindow(new StalinSortWindow,
-                                       ":/images/stalinWizard.png"); },
-        [](){ return new LessonWindow(new GraphTheoryWindow,
-                                       ":/images/colorfulWizard.png"); },
-        [](){ return new LessonWindow(new BFSWindow,
-                                       ":/images/smokeWizard.png"); },
-        [](){ return new LessonWindow(new DijkstraWindow,
-                                       ":/images/oldWizard.png"); },
-        [](){ return new LessonWindow(new BinarySearchWindow,
-                                       ":/images/greenWizard.png"); },
-        [](){ return new LessonWindow(new SortingGameWindow,
-                                       ":/images/wizard_sortgame.png"); },
-        [](){ return new LessonWindow(new GraphGameWindow,
-                                       ":/images/wizard_graphgame.png"); }
+
+        // Runtime Complexity
+        []() {
+            auto *lesson = new LessonWindow(new RuntimeWindow,
+                                            ":/images/lightningWizard.png");
+            lesson->setBannerText(
+                "Runtime Complexity (Big‑O)\n"
+                "Runtime complexity measures how an algorithm’s execution time grows as the input size increases. "
+                "Using Big‑O notation we classify algorithms by their upper‑bound growth rates.\n\n"
+                "- O(1): constant time\n"
+                "- O(log n): logarithmic time\n"
+                "- O(n): linear time\n"
+                "- O(n log n): linearithmic time\n"
+                "- O(n^2): quadratic time\n"
+                "- Visualization compares growth curves"
+                );
+            return lesson;
+        },
+
+        // Merge Sort
+        []() {
+            auto *lesson = new LessonWindow(new MergeSortWindow,
+                                            ":/images/darkWizard.png");
+            lesson->setBannerText(
+                "Merge Sort\n\n"
+                "Merge sort is an O(NLogN) in all cases sorting algorithm that is O(N) in space "
+                "complexity. It starts by splitting a list into elements of size 1, and then merging each "
+                "of those lists back together, swapping the ordering along the way as needed. This "
+                "visualization shows the \"second half\" of the sort, and sorts the left subtrees first.\n\n"
+                "- Time: O(n log n) in all cases\n"
+                "- Space: O(n) extra\n"
+                "- Recursively splits into size‑1 lists\n"
+                "- Merges by comparing and appending smaller elements\n"
+                "- Divide‑and‑conquer approach"
+                );
+            return lesson;
+        },
+
+        // Insertion Sort
+        []() {
+            auto *lesson = new LessonWindow(new InsertionSortRenderer,
+                                            ":/images/heavenlyWizard.png");
+            lesson->setBannerText(
+                "Insertion Sort \n\n"
+                "Insertion sort: in the best case, it's O(n), in the average "
+                "and worst case, it's O(n^2). It accomplishes"
+                "its best case with a conditional inner while-loop that checks if, "
+                "in this case, the bar is already in its correct position."
+                "It grows a \"sorted\" portion at each outer loop iteration, and "
+                "then moves the rightmost bar to its proper place..\n\n"
+                "- Best: O(n), Average/Worst: O(n^2)\n"
+                "- Builds sorted portion one element at a time\n"
+                "- Uses conditional inner while‑loop to shift\n"
+                "- In‑place and stable\n"
+                "- Efficient on small or mostly‑sorted data"
+                );
+            return lesson;
+        },
+
+        // Stalin Sort
+        []() {
+            auto *lesson = new LessonWindow(new StalinSortWindow,
+                                            ":/images/stalinWizard.png");
+            lesson->setBannerText(
+                "Stalin Sort \n\n"
+                "Stalin sort: It is always O(N) and works by 'taking out back' unsorted elements. "
+                "It is in place as well so it has constant memory (actually frees more up?!?). "
+                "This makes stalin sort one of the 'best' sorting algorithms if you are fine with "
+                "missing data at the end.\n\n"
+                "- Time: O(n)\n"
+                "- In‑place with constant extra space\n"
+                "- Removes out‑of‑order elements\n"
+                "- Discards missing data at the end\n"
+                "- Fastest if discarding values is acceptable"
+                );
+            return lesson;
+        },
+
+        // Graph Theory
+        []() {
+            auto *lesson = new LessonWindow(new GraphTheoryWindow,
+                                            ":/images/colorfulWizard.png");
+            lesson->setBannerText(
+                "Graph Theory \n\n"
+                "Graph theory studies structures of nodes (vertices) connected by edges. Graphs model networks "
+                "such as social connections, road maps, and communication links.\n\n"
+                "- Vertices and edges\n"
+                "- Directed vs undirected\n"
+                "- Weighted vs unweighted\n"
+                "- Traversals: BFS and DFS\n"
+                "- Shortest paths & spanning trees"
+                );
+            return lesson;
+        },
+
+        // BFS
+        []() {
+            auto *lesson = new LessonWindow(new BFSWindow,
+                                            ":/images/smokeWizard.png");
+            lesson->setBannerText(
+                "Breadth‑First Search (BFS)\n"
+                "Breadth‑First Search (BFS) explores all neighbors of a vertex before moving deeper. "
+                "It uses a queue to track the frontier.\n\n"
+                "- Explores level by level\n"
+                "- Uses a queue for the frontier\n"
+                "- Time: O(V + E), Space: O(V)\n"
+                "- Finds shortest paths in unweighted graphs\n"
+                "- Useful for networking/routing"
+                );
+            return lesson;
+        },
+
+        // Dijkstra’s Algorithm
+        []() {
+            auto *lesson = new LessonWindow(new DijkstraWindow,
+                                            ":/images/oldWizard.png");
+            lesson->setBannerText(
+                "Dijkstra’s Algorithm \n\n"
+                "Dijkstra’s algorithm finds the shortest paths from a source to all vertices in a non‑negative "
+                "weighted graph.\n\n"
+                "- Requires non‑negative edge weights\n"
+                "- Uses a min‑heap of distance estimates\n"
+                "- Extracts closest vertex each step\n"
+                "- Relaxes outgoing edges\n"
+                "- Time: O((V + E) log V), Space: O(V)"
+                );
+            return lesson;
+        },
+
+        // Binary Search
+        []() {
+            auto *lesson = new LessonWindow(new BinarySearchWindow,
+                                            ":/images/greenWizard.png");
+            lesson->setBannerText(
+                "Binary Search \n\n"
+                "Binary search is an algorithm used to quickly find a target value within a sorted list. "
+                "The main idea is to repeatedly divide the search range in half. First, it checks the middle element of the list. "
+                "If the target value is greater than the middle element, the algorithm continues searching in the right half. "
+                "On the other hand, if it's smaller, it searches the left half. "
+                "This process continues until the target is found or there are no more elements left to check. "
+                "The runtime of the binary serach is O(1) in the best case, O(log n) in the worst case. "
+                "The bar below is a way to find the number 14 using binary search among bars 1 to 20.\n\n"
+                "- Requires sorted list\n"
+                "- Check middle element first\n"
+                "- If target > middle, search right half\n"
+                "- Else search left half\n"
+                "- Best: O(1), Average/Worst: O(log n)"
+                );
+            return lesson;
+        },
+
+        // Sorting Game (no banner text)
+        []() {
+            return new LessonWindow(new SortingGameWindow,
+                                    ":/images/wizard_sortgame.png");
+        },
+
+        // Graph Game (no banner text)
+        []() {
+            return new LessonWindow(new GraphGameWindow,
+                                    ":/images/wizard_graphgame.png");
+        }
     };
+
 
     // set up for progress meter
     totalTasks = algoButtons.size();

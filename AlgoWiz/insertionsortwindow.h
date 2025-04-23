@@ -2,6 +2,7 @@
 #define INSERTIONSORTWINDOW_H
 
 #include <QWidget>
+
 #include "insertionsortrenderer.h"
 
 class InsertionSortWindow : public QWidget
