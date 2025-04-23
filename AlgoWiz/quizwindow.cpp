@@ -13,7 +13,8 @@ QuizWindow::QuizWindow(QWidget *parent)
     // Intro screen
     introLabel = new QLabel("Are you ready for the quiz?", this);
     introLabel->setAlignment(Qt::AlignCenter);
-    introLabel->setStyleSheet("font-size: 48px; font-weight: bold;");
+    introLabel->setStyleSheet("font-size: 48px; font-weight: bold; color: white;");
+
     layout->addWidget(introLabel);
 
     startQuizButton = new QPushButton("Ready to Quiz", this);
