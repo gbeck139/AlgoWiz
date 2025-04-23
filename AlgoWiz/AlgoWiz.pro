@@ -59,6 +59,7 @@ SOURCES += \
     bfswindow.cpp \
     binarysearchrenderer.cpp \
     binarysearchwindow.cpp \
+    buttonphysics.cpp \
     dfswindow.cpp \
     dijkstrawindow.cpp \
     graphalgorenderer.cpp \
@@ -130,6 +131,7 @@ HEADERS += \
     bfswindow.h \
     binarysearchrenderer.h \
     binarysearchwindow.h \
+    buttonphysics.h \
     dfswindow.h \
     dijkstrawindow.h \
     graphalgorenderer.h \

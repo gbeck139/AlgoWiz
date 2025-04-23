@@ -22,6 +22,7 @@
 #include "stalinsortwindow.h"
 #include "ui_mainwindow.h"
 #include "lessonwindow.h"
+#include "ButtonPhysics.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -78,6 +79,8 @@ MainWindow::MainWindow(QWidget *parent)
                                         ui->practiceQuizWindowButton,
                                         ui->sortingGameWindowButton,
                                         ui->graphGameWindowButton};
+
+    new ButtonPhysics(this, algoButtons);
 
     // Save as lambdas so that the animation in the window do not begin running yet
     QList<std::function<QWidget*()>> windowFactories = {
