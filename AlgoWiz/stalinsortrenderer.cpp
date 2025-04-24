@@ -1,14 +1,24 @@
+/**
+ * @file stalinsortrenderer.cpp
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the implementation of the Stalin sort renderer class.
+ * @date 2025-04-24
+ */
+
 #include "stalinsortrenderer.h"
 #include <QTimer>
 
-StalinSortRenderer::StalinSortRenderer() {
+StalinSortRenderer::StalinSortRenderer()
+{
     startAnimation();
 }
 
-void StalinSortRenderer::restoreList() {
+void StalinSortRenderer::restoreList()
+{
     bars = std::vector<bar>();
 
-    for (int i = 1; i <= 20; i++) {
+    for (int i = 1; i <= 20; i++)
+    {
         bar b;
         b.val = i;
         b.color = defaultColor;
@@ -27,11 +37,14 @@ void StalinSortRenderer::startAnimation()
     runSortStep();
 }
 
-void StalinSortRenderer::runSortStep() {
-    if (currentStep >= (int) bars.size()) { // done sorting
+void StalinSortRenderer::runSortStep()
+{
+    if (currentStep >= (int)bars.size())
+    { // done sorting
 
         animationIsFinished = true;
-        if (looping) {
+        if (looping)
+        {
             currentStep = 1;
             restoreList();
             update();
@@ -40,33 +53,43 @@ void StalinSortRenderer::runSortStep() {
             // run the animation on sort.
             QTimer::singleShot(1000, this, &StalinSortRenderer::runSortStep);
             return;
-        } else {
+        }
+        else
+        {
             return;
         }
     }
 
     animationIsFinished = false;
 
-    if(bars[currentStep].val < bars[currentStep - 1].val) {
+    if (bars[currentStep].val < bars[currentStep - 1].val)
+    {
         // time to take current step bar out back
         bars.erase(bars.begin() + currentStep); // clear bar that is out of line.
         update();
-        if (looping) {
+        if (looping)
+        {
             QTimer::singleShot(500, this, &StalinSortRenderer::runSortStep);
-        } else { // this else is for human player vs ai, to make it "possible" to beat
+        }
+        else
+        { // this else is for human player vs ai, to make it "possible" to beat
             QTimer::singleShot(1500, this, &StalinSortRenderer::runSortStep);
         }
 
         return;
     }
-    else {
+    else
+    {
         setBarColor(currentStep, Qt::red); // set bar to red to show we've looked at it.
         currentStep++;
         update();
 
-        if (looping) {
+        if (looping)
+        {
             QTimer::singleShot(500, this, &StalinSortRenderer::runSortStep);
-        } else { // this else is for human player vs ai, to make it "possible" to beat
+        }
+        else
+        { // this else is for human player vs ai, to make it "possible" to beat
             QTimer::singleShot(1500, this, &StalinSortRenderer::runSortStep);
         }
 

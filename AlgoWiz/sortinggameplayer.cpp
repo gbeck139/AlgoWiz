@@ -1,3 +1,10 @@
+/**
+ * @file sortinggameplayer.cpp
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the implementation of the sorting game player class.
+ * @date 2025-04-24
+ */
+
 #include "sortinggameplayer.h"
 #include <QMouseEvent>
 #include <QVBoxLayout>
@@ -10,7 +17,8 @@ sortingGamePlayer::sortingGamePlayer(QWidget *parent)
     bars.clear();
 
     // put 20 bar structs in the bars vector
-    for (int i = 5; i <= 25; i++) {
+    for (int i = 5; i <= 25; i++)
+    {
         bar b;
         b.val = i;
         b.color = defaultColor;
@@ -28,7 +36,8 @@ sortingGamePlayer::sortingGamePlayer(QWidget *parent)
 void sortingGamePlayer::resetGame()
 {
     // reset all bar colors
-    for (size_t i = 0; i < bars.size(); ++i) {
+    for (size_t i = 0; i < bars.size(); ++i)
+    {
         setBarColor(i, defaultColor);
     }
 

@@ -1,3 +1,10 @@
+/**
+ * @file insertionsortrenderer.cpp
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the implementation of the insertion sort renderer class.
+ * @date 2025-04-24
+ */
+
 #include "insertionsortrenderer.h"
 #include <QDebug>
 #include <QTimer>
@@ -11,10 +18,12 @@ void InsertionSortRenderer::runSortStep()
 {
     // case: done sorting
     animationIsFinished = false;
-    if (currentStep >= (int) bars.size()) {
+    if (currentStep >= (int)bars.size())
+    {
         stepInProgress = false;
         animationIsFinished = true; // true because at this point the animation is in the sorted state
-        if (looping) {
+        if (looping)
+        {
             currentStep = 1;
             whileStep = 0;
             update();
@@ -25,18 +34,22 @@ void InsertionSortRenderer::runSortStep()
                 this,
                 &InsertionSortRenderer::runSortStep); // pause for 2 sec before running the sort again
             return;
-        } else {
+        }
+        else
+        {
             return;
         }
     }
 
     int delay = 800;
-    if (looping) {
+    if (looping)
+    {
         delay = 200;
     }
 
     // new outer loop iteration is occuring
-    if (!stepInProgress) {
+    if (!stepInProgress)
+    {
         // bar color change
         whileStep = currentStep;
         stepInProgress = true;
@@ -47,14 +60,16 @@ void InsertionSortRenderer::runSortStep()
     }
 
     // case: bar needs to move left (we need to do a swap)
-    if (whileStep > 0 && bars[whileStep - 1].val > bars[whileStep].val) {
+    if (whileStep > 0 && bars[whileStep - 1].val > bars[whileStep].val)
+    {
         std::swap(bars[whileStep - 1], bars[whileStep]);
         whileStep--;
         update();
         QTimer::singleShot(delay, this, &InsertionSortRenderer::runSortStep);
         return;
-
-    } else { // case: bar is where it's supposed to be
+    }
+    else
+    { // case: bar is where it's supposed to be
         setBarColor(whileStep, defaultColor);
         setBarColor(currentStep, defaultColor);
         stepInProgress = false;
