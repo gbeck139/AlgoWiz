@@ -1,3 +1,10 @@
+/**
+ * @file sortingalgorenderer.h
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the declaration of the sortingAlgoRenderer class and the bar struct used in the sorting algorithm renderers.
+ * @date 2025-04-24
+ */
+
 #ifndef SORTINGALGORENDERER_H
 #define SORTINGALGORENDERER_H
 

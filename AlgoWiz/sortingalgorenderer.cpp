@@ -1,3 +1,10 @@
+/**
+ * @file sortingalgorenderer.cpp
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the implemenatoin for the sortingAlgoRenderer, used as the base class for the sorting algorithm animation renderers.
+ * @date 2025-04-24
+ */
+
 #include "sortingalgorenderer.h"
 #include <algorithm>
 #include <random>

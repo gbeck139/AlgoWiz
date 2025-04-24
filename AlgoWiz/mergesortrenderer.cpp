@@ -1,9 +1,16 @@
+/**
+ * @file sortinggamewindow.cpp
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the implementation for the merge sort renderer.
+ * @date 2025-04-24
+ */
+
 #include "mergesortrenderer.h"
 #include <QTimer>
 
 mergeSortRenderer::mergeSortRenderer()
 {
-    for (int i = 21; i <= 32; i++) {
+    for (int i = 21; i <= 32; i++) { // add a few bars more than the default constructor so its easier to see merge sort
         bar b;
         b.val = i;
         b.color = defaultColor;

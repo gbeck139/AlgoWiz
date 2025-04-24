@@ -1,3 +1,10 @@
+/**
+ * @file sortinggamewindow.h
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the declaration of the SortingGameWindow class and is used to display the sorting mini-game.
+ * @date 2025-04-24
+ */
+
 #ifndef SORTINGGAMEWINDOW_H
 #define SORTINGGAMEWINDOW_H
 

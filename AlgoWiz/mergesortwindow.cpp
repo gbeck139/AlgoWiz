@@ -1,3 +1,10 @@
+/**
+ * @file sortinggamewindow.cpp
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the implementation to construct the Merge sort window.
+ * @date 2025-04-24
+ */
+
 #include "mergesortwindow.h"
 #include <QLabel>
 #include <QVBoxLayout>

@@ -1,3 +1,10 @@
+/**
+ * @file sortinggamewindow.cpp
+ * @author Isaac Huntsman, Joshua Eggett
+ * @brief This file contains the implementation for the SortingGameWindow which is used to create the sorting mini game.
+ * @date 2025-04-24
+ */
+
 #include "sortinggamewindow.h"
 #include <QDebug>
 #include <QHBoxLayout>
@@ -12,7 +19,7 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
 {
     setWindowTitle("Sorting Game");
     resize(800, 800);
-    layout = new QVBoxLayout();
+    layout = new QVBoxLayout(); // create the layout for the window.
 
     // signal from here to
 
@@ -25,9 +32,9 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
 
     easySelection = new QPushButton("Easy mode", parent);
     mediumSelection = new QPushButton("Normal mode", parent);
-    hardSelection = new QPushButton("Hard mode", parent);
+    hardSelection = new QPushButton("Hard mode", parent); // construct the buttons to select difficulty
 
-    buttonBox->addWidget(easySelection);
+    buttonBox->addWidget(easySelection); // add buttons to the button horizontal box layout
     buttonBox->addWidget(mediumSelection);
     buttonBox->addWidget(hardSelection);
 
@@ -38,7 +45,7 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     connect(mediumSelection, &QPushButton::clicked, this, [=]()
             { emit difficultySelected(1); });
     connect(hardSelection, &QPushButton::clicked, this, [=]()
-            { emit difficultySelected(2); });
+            { emit difficultySelected(2); }); // connect the buttons to the difficulty handler to change difficulty
 
     playerController = new sortingGamePlayer(this);
     connect(playerController, &sortingGamePlayer::playerFinished, this, &SortingGameWindow::handlePlayerFinished);
