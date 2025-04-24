@@ -13,8 +13,6 @@ public:
 
 private:
     BinarySearchRenderer *renderer;
-    //QPushButton *nextButton;
-    //QuizWindow *quizWindow = new QuizWindow();
 };
 
 #endif // BINARYSEARCHWINDOW_H
