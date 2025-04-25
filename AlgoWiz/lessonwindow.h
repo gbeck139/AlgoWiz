@@ -13,9 +13,10 @@ class LessonWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit LessonWindow(QWidget    *algoWidget,
-                          const QString &wizardPng,
-                          QWidget    *parent = nullptr);
+    explicit LessonWindow(QWidget *algoWidget,
+                         const QString &wizardPng,
+                         bool showBanner = true,
+                         QWidget *parent = nullptr);
 
     // Module‑specific text goes here:
     void setBannerText(const QString &text);

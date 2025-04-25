@@ -1,5 +1,4 @@
 #include "lessonwindow.h"
-
 #include <QLabel>
 #include <QPushButton>
 #include <QPainter>
@@ -8,9 +7,10 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-LessonWindow::LessonWindow(QWidget    *algoWidget,
+LessonWindow::LessonWindow(QWidget *algoWidget,
                            const QString &wizardPng,
-                           QWidget    *parent)
+                           bool showBanner,
+                           QWidget *parent)
     : QWidget(parent),
     contentPane(new QWidget(this)),
     textBanner(new QLabel("", this)),
@@ -52,11 +52,19 @@ LessonWindow::LessonWindow(QWidget    *algoWidget,
         );
 
     auto *v = new QVBoxLayout(contentPane);
-    // bump right margin so the banner never slides under the ✕
-    v->setContentsMargins(48, 48, 200, 70);
-    v->setSpacing(12);
-    v->addWidget(textBanner,0);
-    v->addWidget(algoWidget,1);
+    if (showBanner)
+    {
+        // bump right margin so the banner never slides under the ✕
+        v->setContentsMargins(48, 48, 200, 70);
+        v->setSpacing(12);
+        v->addWidget(textBanner,0);
+        v->addWidget(algoWidget,1);
+    } else {
+        v-> setContentsMargins(48, 16, 16, 16);
+        v->setSpacing(0);
+        textBanner->hide();
+    }
+    v->addWidget(algoWidget, 1);
 
     //Root layout: invisible 1/3 + contentPane (2/3)
     auto *root = new QHBoxLayout(this);
