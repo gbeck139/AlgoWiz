@@ -13,8 +13,8 @@
 #include "bfswindow.h"
 #include "binarysearchwindow.h"
 #include "dijkstrawindow.h"
-#include "graphbfsgamewindow.h"
 #include "graphtheorywindow.h"
+#include "graphtraversalgamewindow.h"
 #include "insertionsortwindow.h"
 #include "mergesortwindow.h"
 #include "quizwindow.h"
@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
             auto *lesson = new LessonWindow(new DFSWindow,
                                             ":/images/purpleWizard.png");
             lesson->setBannerText(
-                "Depth‑First Search (DFS)\n"
+                "Depth‑First Search (DFS)\n\n"
                 "Depth‑First Search (DFS) is a graph traversal algorithm that explores as far as possible along "
                 "each branch before backtracking. It uses a stack—either via recursion or an explicit stack—to "
                 "remember the path. DFS runs in O(V + E) time and requires O(V) space for the stack.\n\n"
@@ -107,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
             auto *lesson = new LessonWindow(new RuntimeWindow,
                                             ":/images/lightningWizard.png");
             lesson->setBannerText(
-                "Runtime Complexity (Big‑O)\n"
+                "Runtime Complexity (Big‑O)\n\n"
                 "Runtime complexity measures how an algorithm’s execution time grows as the input size increases. "
                 "Using Big‑O notation we classify algorithms by their upper‑bound growth rates.\n\n"
                 "- O(1): constant time\n"
@@ -201,7 +201,7 @@ MainWindow::MainWindow(QWidget *parent)
             auto *lesson = new LessonWindow(new BFSWindow,
                                             ":/images/smokeWizard.png");
             lesson->setBannerText(
-                "Breadth‑First Search (BFS)\n"
+                "Breadth‑First Search (BFS)\n\n"
                 "Breadth‑First Search (BFS) explores all neighbors of a vertex before moving deeper. "
                 "It uses a queue to track the frontier.\n\n"
                 "- Explores level by level\n"
@@ -255,22 +255,21 @@ MainWindow::MainWindow(QWidget *parent)
         // Quiz (no banner text)
         []() {
             return new LessonWindow(new QuizWindow,
-                                    ":/images/bookWizard");
+                                    ":/images/bookWizard", false);
         },
 
         // Sorting Game (no banner text)
         []() {
             return new LessonWindow(new SortingGameWindow,
-                                    ":/images/snowWizard.png");
+                                    ":/images/snowWizard.png", false);
         },
 
         // Graph Game (no banner text)
         []() {
-            return new LessonWindow(new GraphBFSGameWindow,
-                ":/images/vikingWizard.png");
+            return new LessonWindow(new GraphTraversalGameWindow,
+                                    ":/images/vikingWizard.png", false);
         }
     };
-
 
     // set up for progress meter
     totalTasks = algoButtons.size();
@@ -280,13 +279,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     progressPercentLabel = ui->progressPercentLabel
                                ? ui->progressPercentLabel
-                               : new QLabel("00%", this);
+                               : new QLabel("0%", this);
 
     if (!ui->progressPercentLabel) {
         // progressPercentLabel->setGeometry(995, 40, 50, 23);
         progressPercentLabel->setAlignment(Qt::AlignCenter);
     }
-    progressPercentLabel->setText("00%");
+    progressPercentLabel->setText("0%");
 
 
 
@@ -336,31 +335,7 @@ void MainWindow::paintEvent(QPaintEvent *event){
     }
 }
 
-// Algorithm Windows
-// void MainWindow::openDFS(){
-
-// }
-
 void MainWindow::setStyle(QPushButton* btn){
-    // btn->setFlat(true);  // Removes 3D effect
-    // btn->setStyleSheet(R"(
-    //     QPushButton {
-    //         background-color: transparent;
-    //         border: 2px solid #FFA500; /* Fiery orange */
-    //         border-radius: 2px;
-    //         font-size: 20px;
-    //         font-weight: bold;
-    //         font-style: italic;
-    //         color: #FFA500;
-    //     }
-
-    //     QPushButton:hover {
-    //         color: #FF4500; /* Brighter gold on hover */
-    //         border-color: #FF4500;
-    //     }
-    // )");
-
-
     btn->setCursor(Qt::PointingHandCursor);
     btn->setStyleSheet(R"(
         QPushButton {

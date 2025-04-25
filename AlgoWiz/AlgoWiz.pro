@@ -63,9 +63,8 @@ SOURCES += \
     dfswindow.cpp \
     dijkstrawindow.cpp \
     graphalgorenderer.cpp \
-    graphbfsgamewindow.cpp \
-    graphgamewindow.cpp \
     graphtheorywindow.cpp \
+    graphtraversalgamewindow.cpp \
     insertionsortrenderer.cpp \
     insertionsortwindow.cpp \
     lessonwindow.cpp \
@@ -136,9 +135,8 @@ HEADERS += \
     dfswindow.h \
     dijkstrawindow.h \
     graphalgorenderer.h \
-    graphbfsgamewindow.h \
-    graphgamewindow.h \
     graphtheorywindow.h \
+    graphtraversalgamewindow.h \
     insertionsortwindow.h \
     lessonwindow.h \
     mainwindow.h \
