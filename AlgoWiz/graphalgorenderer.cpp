@@ -141,7 +141,7 @@ void GraphAlgoRenderer::createTheoryGraph(){
     addEdge("C", "B", false);
 
     addNode("D", QPoint(100, 600), true, 5);
-    addNode("E", QPoint(600, 600), false, 2);
+    addNode("E", QPoint(600, 600), true, 2);
 
     addEdge("D", "E", true, 6);
 }
