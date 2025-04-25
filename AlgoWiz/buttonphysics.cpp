@@ -66,7 +66,7 @@ void ButtonPhysics::createButtonBody(QPushButton* button)
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
     fixtureDef.density = 0.5f;
-    fixtureDef.friction = 0.6f;
+    fixtureDef.friction = 2.5f;
     fixtureDef.restitution = 0.05f;
 
     body->CreateFixture(&fixtureDef);
@@ -84,7 +84,7 @@ void ButtonPhysics::updatePhysics()
     double t = m_clock.elapsed() / 1000.0;
     const float amp_px = 4.0f;
     const float freq   = 2.0f;
-    const float k      = 0.25f;
+    const float k      = 0.15f;
 
     for (QPushButton* button : m_buttons) {
         b2Body* body = m_buttonBodies[button];
@@ -129,8 +129,8 @@ bool ButtonPhysics::eventFilter(QObject* watched, QEvent* event)
         if (event->type() == QEvent::Enter && body) {
             body->SetLinearVelocity(b2Vec2(0, 0));
 
-            float forceX = (QRandomGenerator::global()->bounded(6) - 3) * 1.5f;
-            float forceY = -3.0f;
+            float forceX = (QRandomGenerator::global()->bounded(6) - 3) * 0.7f;
+            float forceY = -0.7f;
             body->ApplyLinearImpulse(b2Vec2(forceX, forceY), body->GetWorldCenter(), true);
 
             QString currentStyle = button->styleSheet();

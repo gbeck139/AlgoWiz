@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label->setGeometry(newWidth/2.3, -350, 1000, 1000);
     ui->progressBar->setGeometry(newWidth/2.8, newHeight/20, 500, 100);
     ui->label_3->setGeometry(newWidth/3.3 - 20, newHeight/20, 500, 100);
-    ui->progressPercentLabel->setGeometry(newWidth/1.4, newHeight/20, 500, 100);
+    // ui->progressPercentLabel->setGeometry(newWidth/1.4, newHeight/20, 500, 100);
 
     // Algorithm windows and buttons
     QList<QPushButton *> algoButtons = {ui->dfsWindowButton,
@@ -283,7 +283,7 @@ MainWindow::MainWindow(QWidget *parent)
                                : new QLabel("00%", this);
 
     if (!ui->progressPercentLabel) {
-        progressPercentLabel->setGeometry(995, 40, 50, 23);
+        // progressPercentLabel->setGeometry(995, 40, 50, 23);
         progressPercentLabel->setAlignment(Qt::AlignCenter);
     }
     progressPercentLabel->setText("00%");

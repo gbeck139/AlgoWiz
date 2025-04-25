@@ -35,10 +35,16 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
     painter.translate(shiftX, shiftY);
 
     // Draw edges
-    painter.setPen(QPen(Qt::white, 2));
+    painter.setPen(QPen(Qt::white, 4));
+
+    QFont font = painter.font();
+    font.setPointSize(14);                  // Change the number to adjust size
+    font.setBold(true);                     // Optional: Make it bold
+    painter.setFont(font);
+
     for (const Edge& edge : edges) {
         if (nodes.contains(edge.from) && nodes.contains(edge.to)) {
-            painter.setPen(QPen(Qt::white, 2));
+            painter.setPen(QPen(Qt::white, 4));
             QPoint from = nodes[edge.from].pos;
             QPoint to = nodes[edge.to].pos;
             if (edge.weighted){
@@ -46,25 +52,32 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
                 QPoint labelPos = mid + QPoint(0, -10);
                 painter.drawText(labelPos, QString::number(edge.weight));
             }
-            painter.setPen(QPen(edge.color, 2));
+            painter.setPen(QPen(edge.color, 4));
             painter.drawLine(from, to);
         }
     }
 
     // Draw nodes
     for (auto it = nodes.begin(); it != nodes.end(); ++it) {
+
+        QFont font = painter.font();
+        font.setPointSize(14);
+        font.setBold(true);
+        painter.setFont(font);
+
         const QString& id = it.key();
         const Node& node = it.value();
 
         painter.setBrush(node.color);
         painter.setPen(Qt::white);
-        painter.drawEllipse(node.pos, 20, 20);
         painter.drawText(node.pos + QPoint(-25, -25), id);
+        painter.setPen(Qt::black);
+        painter.drawEllipse(node.pos, 20, 20);
         if (node.hasValue){
             if(node.value == INT_MAX){
-                painter.drawText(node.pos+ QPoint(-5, 5), "∞");
+                painter.drawText(node.pos+ QPoint(-7, 5), "∞");
             }else{
-                painter.drawText(node.pos+ QPoint(-5, 5), QString::number(node.value));
+                painter.drawText(node.pos+ QPoint(-7, 5), QString::number(node.value));
             }
         }
     }
@@ -74,8 +87,9 @@ void GraphAlgoRenderer::runTraversalAnimation(const QVector<QString> &traversalO
 {
     for (int i = 0; i < traversalOrder.size(); ++i) {
         if(traversalOrder[i].startsWith("_")){
+            QString edge = traversalOrder[i].split("_")[1];
             QTimer::singleShot(i * delayMs, this, [=]() {
-                setEdgeColor(traversalOrder[i].right(1).toInt(), Qt::yellow);
+                setEdgeColor(edge.toInt(), QColor("#1E90FF"));
             });
         }else if(traversalOrder[i].startsWith(".")){
             QStringList parts = traversalOrder[i].split(".");
@@ -86,7 +100,7 @@ void GraphAlgoRenderer::runTraversalAnimation(const QVector<QString> &traversalO
             });
         }else {
             QTimer::singleShot(i * delayMs, this, [=]() {
-                setNodeColor(traversalOrder[i], Qt::green);
+                setNodeColor(traversalOrder[i], QColor("#06FFFF"));
             });
         }
     }
@@ -126,8 +140,8 @@ void GraphAlgoRenderer::createTheoryGraph(){
 
     addEdge("C", "B", false);
 
-    addNode("D", QPoint(100, 600), false);
-    addNode("E", QPoint(600, 600), false);
+    addNode("D", QPoint(100, 600), true, 5);
+    addNode("E", QPoint(600, 600), false, 2);
 
     addEdge("D", "E", true, 6);
 }
@@ -182,12 +196,12 @@ void GraphAlgoRenderer::createWeightedGraph()
 {
     // https://www.youtube.com/watch?v=bZkzH5x0SKU
     // Add Nodes (coordinates chosen to reflect top row = 1,3,5 and bottom row = 0,2,4)
-    addNode("B", QPoint(200, 300), true, INT_MAX);  // Top-left
-    addNode("D", QPoint(200, 500), true, INT_MAX);  // Top-middle
-    addNode("F", QPoint(400, 500), true, INT_MAX);  // Top-right
-    addNode("A", QPoint(100, 400), true, 0);  // Bottom-left
-    addNode("C", QPoint(500, 400), true, INT_MAX);  // Bottom-middle
-    addNode("E", QPoint(400, 300), true, INT_MAX);  // Bottom-right
+    addNode("B", QPoint(300, 450), true, INT_MAX);   // Top-left
+    addNode("D", QPoint(300, 750), true, INT_MAX);   // Top-middle
+    addNode("F", QPoint(600, 750), true, INT_MAX);   // Top-right
+    addNode("A", QPoint(150, 600), true, 0);         // Bottom-left
+    addNode("C", QPoint(750, 600), true, INT_MAX);   // Bottom-middle
+    addNode("E", QPoint(600, 450), true, INT_MAX);   // Bottom-right
 
     // Add Edges (undirected, with weights taken from the diagram)
     addEdge("A", "B", true, 2); // 2

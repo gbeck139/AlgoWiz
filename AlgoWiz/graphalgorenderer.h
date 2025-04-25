@@ -32,7 +32,7 @@ public:
         QString to;
         bool weighted;
         int weight;
-        QColor color = Qt::black;
+        QColor color = Qt::white;
     };
 
     QMap<QString, Node> nodes;
@@ -48,7 +48,7 @@ protected:
 
 
     const QRgb orange = 0xff8c00;
-    QColor defaultColor = QColor(orange);
+    QColor defaultColor = QColor(QColorConstants::Svg::white);
 };
 
 #endif // GRAPHALGORENDERER_H
