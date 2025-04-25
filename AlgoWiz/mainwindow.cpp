@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Will take a few seconds to build first time around)
     player->setSource(QUrl("qrc:/audios/cool.mp3")); // simply change song name to either 'calm.mp3', 'cool.mp3', or 'hype.mp3'
-    player->play();
+    //player->play();
 
     //automatic positioning of buttons for user specific screen size
     ui->runtimeWindowButton->setGeometry(newWidth/8.5 + 100, newHeight/1.5 + 60, 150, 30);

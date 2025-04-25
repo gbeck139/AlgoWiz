@@ -10,9 +10,11 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QFrame>
 #include "insertionsortrenderer.h"
 #include "mergesortrenderer.h"
 #include "stalinsortrenderer.h"
+#include "styleutils.h"
 
 SortingGameWindow::SortingGameWindow(QWidget *parent)
     : QWidget(parent)
@@ -20,9 +22,9 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     setWindowTitle("Sorting Game");
     resize(800, 800);
     layout = new QVBoxLayout(); // create the layout for the window.
+    layout->addSpacing(50);
 
     // signal from here to
-
     connect(this,
             &SortingGameWindow::difficultySelected,
             this,
@@ -33,6 +35,10 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     easySelection = new QPushButton("Easy mode", parent);
     mediumSelection = new QPushButton("Normal mode", parent);
     hardSelection = new QPushButton("Hard mode", parent); // construct the buttons to select difficulty
+
+    easySelection->setStyleSheet(gameButtonStyle());
+    mediumSelection->setStyleSheet(gameButtonStyle());
+    hardSelection->setStyleSheet(gameButtonStyle());
 
     buttonBox->addWidget(easySelection); // add buttons to the button horizontal box layout
     buttonBox->addWidget(mediumSelection);
@@ -46,6 +52,17 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
             { emit difficultySelected(1); });
     connect(hardSelection, &QPushButton::clicked, this, [=]()
             { emit difficultySelected(2); }); // connect the buttons to the difficulty handler to change difficulty
+
+    // Create opaque background frames for AI and player sections
+    auto *aiBackingFrame = new QFrame(this);
+    aiBackingFrame->setFrameShape(QFrame::StyledPanel);
+    aiBackingFrame->setStyleSheet("QFrame { background-color: rgba(40, 40, 50, 0.6); border-radius: 12px; }");
+    aiBackingFrame->setMinimumHeight(250);
+
+    auto *playerBackingFrame = new QFrame(this);
+    playerBackingFrame->setFrameShape(QFrame::StyledPanel);
+    playerBackingFrame->setStyleSheet("QFrame { background-color: rgba(40, 40, 50, 0.6); border-radius: 12px; }");
+    playerBackingFrame->setMinimumHeight(250);
 
     playerController = new sortingGamePlayer(this);
     connect(playerController, &sortingGamePlayer::playerFinished, this, &SortingGameWindow::handlePlayerFinished);
@@ -65,10 +82,26 @@ SortingGameWindow::SortingGameWindow(QWidget *parent)
     aiLabel->setAlignment(Qt::AlignCenter);
     playerLabel->setAlignment(Qt::AlignCenter);
 
-    layout->addWidget(aiLabel);
-    layout->addWidget(aiPlayer);
-    layout->addWidget(playerLabel);
-    layout->addWidget(playerController);
+    // Set label text color to white to match graph game
+    aiLabel->setStyleSheet("QLabel { color: white; }");
+    playerLabel->setStyleSheet("QLabel { color: white; }");
+
+    // Create layouts for the backing frames
+    auto *aiFrameLayout = new QVBoxLayout(aiBackingFrame);
+    aiFrameLayout->addWidget(aiLabel);
+    aiFrameLayout->addWidget(aiPlayer);
+    aiFrameLayout->setContentsMargins(20, 20, 20, 20);
+
+    auto *playerFrameLayout = new QVBoxLayout(playerBackingFrame);
+    playerFrameLayout->addWidget(playerLabel);
+    playerFrameLayout->addWidget(playerController);
+    playerFrameLayout->setContentsMargins(20, 20, 20, 20);
+
+    // Add the frames to the main layout instead of individual widgets
+    layout->addWidget(aiBackingFrame);
+    layout->addWidget(playerBackingFrame);
+    layout->setSpacing(20);
+    layout->setContentsMargins(20, 10, 20, 20);
 
     gameResultLabel = new QLabel("");
 
@@ -87,10 +120,13 @@ void SortingGameWindow::handleDifficultySelection(int difficulty)
     // Clear previous result
     gameResultLabel->setText("");
 
-    // Remove the old AI player widget
+    // Remove the old AI player widget from its parent layout
     if (aiPlayer)
     {
-        layout->removeWidget(aiPlayer);
+        QLayout* parentLayout = aiPlayer->parentWidget()->layout();
+        if (parentLayout) {
+            parentLayout->removeWidget(aiPlayer);
+        }
         delete aiPlayer;
     }
 
@@ -110,8 +146,18 @@ void SortingGameWindow::handleDifficultySelection(int difficulty)
 
     aiPlayer->setLooping(false);
 
-    // Insert the AI player at index 2 (after the buttons and AI label)
-    layout->insertWidget(2, aiPlayer);
+    // Find the aiBackingFrame and add the new aiPlayer to its layout
+    QFrame* aiBackingFrame = findChild<QFrame*>();
+    if (aiBackingFrame && aiBackingFrame->layout()) {
+        QVBoxLayout* aiFrameLayout = qobject_cast<QVBoxLayout*>(aiBackingFrame->layout());
+        if (aiFrameLayout) {
+            aiFrameLayout->insertWidget(1, aiPlayer);
+        }
+    }
+
+    // Reset flags
+    aiFinished = false;
+    playerFinished = false;
 
     // check every 100ms if AI won to handle displaying message
     QTimer *timer = new QTimer(this);

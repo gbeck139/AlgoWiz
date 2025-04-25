@@ -1,106 +1,205 @@
 #include "graphtraversalgamewindow.h"
 #include "graphalgorenderer.h"
-#include <QTabWidget>
+#include "styleutils.h"
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QPushButton>
 #include <QLabel>
 #include <QTimer>
 #include <QRandomGenerator>
 #include <QQueue>
 #include <QSet>
 #include <QMap>
+#include <QStackedWidget>
+#include <QFrame>
 #include <algorithm>
 
 GraphTraversalGameWindow::GraphTraversalGameWindow(QWidget *parent)
     : QWidget(parent),
     bfsRenderer(new GraphAlgoRenderer(this)),
     dfsRenderer(new GraphAlgoRenderer(this)),
-    bfsLabel (new QLabel(this)),
-    dfsLabel (new QLabel(this)),
+    bfsLabel(new QLabel(this)),
+    dfsLabel(new QLabel(this)),
+    stackedWidget(new QStackedWidget(this)),
+    bfsButton(new QPushButton("BFS Challenge", this)),
+    dfsButton(new QPushButton("DFS Challenge", this)),
+    restartButton(new QPushButton("RESTART", this)),
     bfsIndex(0),
-    dfsIndex(0)
+    dfsIndex(0),
+    currentMode(true)
 {
     setWindowTitle("Graph Traversal Quiz");
-    setupTabs();
+    setupUI();
 
-    // first call to prime the BFS tab, second to prime the DFS tab
     resetGame(true);
     resetGame(false);
+    switchMode(true);
+    restartButton->hide();
 }
 
-void GraphTraversalGameWindow::setupTabs()
+void GraphTraversalGameWindow::setupUI()
 {
-    auto *tabs = new QTabWidget(this);
+    auto *bfsPage = new QWidget(this);
+    auto *dfsPage = new QWidget(this);
 
-    // --- BFS Tab ---
+    auto *bfsBackingFrame = new QFrame(this);
+    bfsBackingFrame->setFrameShape(QFrame::StyledPanel);
+    bfsBackingFrame->setStyleSheet("QFrame { background-color: rgba(40, 40, 50, 0.6); border-radius: 12px; }");
+    bfsBackingFrame->setMinimumHeight(500);
+
+    auto *dfsBackingFrame = new QFrame(this);
+    dfsBackingFrame->setFrameShape(QFrame::StyledPanel);
+    dfsBackingFrame->setStyleSheet("QFrame { background-color: rgba(40, 40, 50, 0.6); border-radius: 12px; }");
+    dfsBackingFrame->setMinimumHeight(500);
+
     bfsRenderer->createUnweightedGraph();
     bfsLabel->setWordWrap(true);
     bfsLabel->setFont(QFont("Arial", 25));
-    connect(bfsRenderer, &GraphAlgoRenderer::nodeClicked, this, [=](const QString &id){
-        if (bfsIndex < bfsList.size() && id == bfsList[bfsIndex]) {
-            bfsRenderer->setNodeColor(id, bfsIndex+1==bfsList.size()?Qt::green:Qt::yellow);
-            if (++bfsIndex == bfsList.size()) {
-                bfsLabel->setText("BFS Complete!");
-                emit playerFinished();
-            }
-        } else {
-            bfsRenderer->setNodeColor(id, Qt::red);
-            bfsLabel->setText("Incorrect! The BFS traversal will restart.");
-            QTimer::singleShot(1500, this, [=]{ resetGame(true); });
-        }
-    });
+    bfsLabel->setAlignment(Qt::AlignCenter);
+    bfsLabel->setStyleSheet("QLabel { color: white; }");
+    connect(bfsRenderer, &GraphAlgoRenderer::nodeClicked, this, &GraphTraversalGameWindow::handleBfsNodeClick);
 
-    // --- DFS Tab ---
+    auto *bfsFrameLayout = new QVBoxLayout(bfsBackingFrame);
+    bfsFrameLayout->addWidget(bfsLabel);
+    bfsFrameLayout->addWidget(bfsRenderer, 1);
+    bfsFrameLayout->setContentsMargins(20, 20, 20, 20);
+
+    auto *bfsLayout = new QVBoxLayout(bfsPage);
+    bfsLayout->addWidget(bfsBackingFrame, 1);
+    bfsLayout->setContentsMargins(20, 10, 20, 20);
+
     dfsRenderer->createUnweightedGraph();
     dfsLabel->setWordWrap(true);
     dfsLabel->setFont(QFont("Arial", 25));
-    connect(dfsRenderer, &GraphAlgoRenderer::nodeClicked, this, [=](const QString &id){
-        if (dfsIndex < dfsList.size() && id == dfsList[dfsIndex]) {
-            dfsRenderer->setNodeColor(id, dfsIndex+1==dfsList.size()?Qt::green:Qt::yellow);
-            if (++dfsIndex == dfsList.size()) {
-                dfsLabel->setText("DFS Complete!");
-                emit playerFinished();
-            }
-        } else {
-            dfsRenderer->setNodeColor(id, Qt::red);
-            dfsLabel->setText("Incorrect! The DFS traversal will restart.");
-            QTimer::singleShot(1500, this, [=]{ resetGame(false); });
+    dfsLabel->setAlignment(Qt::AlignCenter);
+    dfsLabel->setStyleSheet("QLabel { color: white; }");
+    connect(dfsRenderer, &GraphAlgoRenderer::nodeClicked, this, &GraphTraversalGameWindow::handleDfsNodeClick);
+
+    auto *dfsFrameLayout = new QVBoxLayout(dfsBackingFrame);
+    dfsFrameLayout->addWidget(dfsLabel);
+    dfsFrameLayout->addWidget(dfsRenderer, 1);
+    dfsFrameLayout->setContentsMargins(20, 20, 20, 20);
+
+    auto *dfsLayout = new QVBoxLayout(dfsPage);
+    dfsLayout->addWidget(dfsBackingFrame, 1);
+    dfsLayout->setContentsMargins(20, 10, 20, 20);
+
+    stackedWidget->addWidget(bfsPage);
+    stackedWidget->addWidget(dfsPage);
+
+    bfsButton->setStyleSheet(gameButtonStyle());
+    dfsButton->setStyleSheet(gameButtonStyle());
+
+    bfsButton->setMinimumHeight(60);
+    dfsButton->setMinimumHeight(60);
+
+    restartButton->setStyleSheet(gameButtonStyle() + "QPushButton { font: 800 22px 'Trebuchet MS'; padding: 12px 30px; }");
+    restartButton->setMinimumSize(150, 70);
+
+    connect(bfsButton, &QPushButton::clicked, this, [this]() { switchMode(true); });
+    connect(dfsButton, &QPushButton::clicked, this, [this]() { switchMode(false); });
+    connect(restartButton, &QPushButton::clicked, this, &GraphTraversalGameWindow::handleRestart);
+
+    auto *buttonLayout = new QHBoxLayout();
+    buttonLayout->addWidget(bfsButton, 1);
+    buttonLayout->addWidget(dfsButton, 1);
+    buttonLayout->setSpacing(20);
+    buttonLayout->setContentsMargins(20, 20, 20, 10);
+
+    auto *bottomLayout = new QHBoxLayout();
+    bottomLayout->addStretch();
+    bottomLayout->addWidget(restartButton);
+    bottomLayout->setContentsMargins(20, 10, 40, 30);
+
+    auto *mainLayout = new QVBoxLayout(this);
+    mainLayout->addSpacing(50);
+    mainLayout->addLayout(buttonLayout);
+    mainLayout->addWidget(stackedWidget, 1);
+    mainLayout->addLayout(bottomLayout);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
+}
+
+void GraphTraversalGameWindow::switchMode(bool toBfs)
+{
+    currentMode = toBfs;
+    stackedWidget->setCurrentIndex(toBfs ? 0 : 1);
+    bfsButton->setEnabled(!toBfs);
+    dfsButton->setEnabled(toBfs);
+
+    bfsButton->setStyleSheet(gameButtonStyle() +
+                             (toBfs ? "QPushButton { background: rgba(255,165,0,0.4); border-width: 3px; }" : ""));
+    dfsButton->setStyleSheet(gameButtonStyle() +
+                             (!toBfs ? "QPushButton { background: rgba(255,165,0,0.4); border-width: 3px; }" : ""));
+
+    bool bfsComplete = bfsIndex == bfsList.size();
+    bool dfsComplete = dfsIndex == dfsList.size();
+
+    if (toBfs) {
+        restartButton->setVisible(bfsComplete);
+    } else {
+        restartButton->setVisible(dfsComplete);
+    }
+}
+
+void GraphTraversalGameWindow::handleBfsNodeClick(const QString &id)
+{
+    if (bfsIndex >= bfsList.size()) return;
+
+    if (id == bfsList[bfsIndex]) {
+        bfsRenderer->setNodeColor(id, bfsIndex+1==bfsList.size() ? Qt::green : Qt::yellow);
+        if (++bfsIndex == bfsList.size()) {
+            bfsLabel->setText("BFS Complete!");
+            restartButton->show();
+            emit playerFinished();
         }
-    });
+    } else {
+        bfsRenderer->setNodeColor(id, Qt::red);
+        bfsLabel->setText("Incorrect! The BFS traversal will restart.");
+        QTimer::singleShot(1500, this, [=]{ resetGame(true); });
+    }
+}
 
-    // Layout both tabs
-    auto *bfsLay = new QVBoxLayout;
-    bfsLay->addWidget(bfsLabel);
-    bfsLay->addWidget(bfsRenderer, 1);
-    auto *dfsLay = new QVBoxLayout;
-    dfsLay->addWidget(dfsLabel);
-    dfsLay->addWidget(dfsRenderer, 1);
+void GraphTraversalGameWindow::handleDfsNodeClick(const QString &id)
+{
+    if (dfsIndex >= dfsList.size()) return;
 
-    auto *bfsW = new QWidget; bfsW->setLayout(bfsLay);
-    auto *dfsW = new QWidget; dfsW->setLayout(dfsLay);
+    if (id == dfsList[dfsIndex]) {
+        dfsRenderer->setNodeColor(id, dfsIndex+1==dfsList.size() ? Qt::green : Qt::yellow);
+        if (++dfsIndex == dfsList.size()) {
+            dfsLabel->setText("DFS Complete!");
+            restartButton->show();
+            emit playerFinished();
+        }
+    } else {
+        dfsRenderer->setNodeColor(id, Qt::red);
+        dfsLabel->setText("Incorrect! The DFS traversal will restart.");
+        QTimer::singleShot(1500, this, [=]{ resetGame(false); });
+    }
+}
 
-    tabs->addTab(bfsW, "BFS Challenge");
-    tabs->addTab(dfsW, "DFS Challenge");
-
-    auto *root = new QVBoxLayout(this);
-    root->addWidget(tabs);
+void GraphTraversalGameWindow::handleRestart()
+{
+    resetGame(currentMode);
+    restartButton->hide();
 }
 
 void GraphTraversalGameWindow::resetGame(bool bfsMode)
 {
-    // pick a random start node
-    auto keys  = bfsRenderer->nodes.keys();
+    auto renderer = bfsMode ? bfsRenderer : dfsRenderer;
+    auto keys = renderer->nodes.keys();
     QString start = keys.at(QRandomGenerator::global()->bounded(keys.size()));
 
     if (bfsMode) {
         bfsIndex = 0;
-        bfsList  = bfsOrder(start);
+        bfsList = bfsOrder(start);
         bfsLabel->setText(
             QString("Hint: BFS visits level by level.\n"
                     "Ties are broken alphabetically.\n\n"
                     "Start at “%1”")
                 .arg(start)
             );
-        // reset all node colors
+
         for (auto it = bfsRenderer->nodes.constBegin(),
              end = bfsRenderer->nodes.constEnd();
              it != end; ++it)
@@ -109,13 +208,14 @@ void GraphTraversalGameWindow::resetGame(bool bfsMode)
         }
     } else {
         dfsIndex = 0;
-        dfsList  = dfsOrder(start);
+        dfsList = dfsOrder(start);
         dfsLabel->setText(
             QString("Hint: DFS goes deep before backtracking.\n"
                     "Ties are broken alphabetically.\n\n"
                     "Start at “%1”")
                 .arg(start)
             );
+
         for (auto it = dfsRenderer->nodes.constBegin(),
              end = dfsRenderer->nodes.constEnd();
              it != end; ++it)
@@ -143,7 +243,7 @@ QVector<QString> GraphTraversalGameWindow::bfsOrder(const QString &start)
         auto u = queue.dequeue();
         out.append(u);
         auto nbrs = adj[u].values();
-        std::sort(nbrs.begin(), nbrs.end());
+        std::sort(nbrs.begin(), nbrs.end());  // Sort neighbors alphabetically for consistent traversal
         for (auto &v : nbrs)
             if (!seen.contains(v)) {
                 seen.insert(v);
@@ -163,11 +263,12 @@ QVector<QString> GraphTraversalGameWindow::dfsOrder(const QString &start)
 
     QVector<QString> out;
     QSet<QString> seen;
+    // Recursive lambda to implement DFS traversal
     std::function<void(const QString&)> dfs = [&](const QString &u){
         seen.insert(u);
         out.append(u);
         auto nbrs = adj[u].values();
-        std::sort(nbrs.begin(), nbrs.end());
+        std::sort(nbrs.begin(), nbrs.end());  // Sort neighbors alphabetically for consistent traversal
         for (auto &v : nbrs)
             if (!seen.contains(v))
                 dfs(v);
@@ -175,3 +276,4 @@ QVector<QString> GraphTraversalGameWindow::dfsOrder(const QString &start)
     dfs(start);
     return out;
 }
+

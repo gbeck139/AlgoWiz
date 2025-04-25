@@ -150,7 +150,8 @@ HEADERS += \
     stalinsortwindow.h \
     insertionsortrenderer.h \
     mainwindow.h \
-    sortingalgorenderer.h
+    sortingalgorenderer.h \
+    styleutils.h
 
 FORMS += \
     mainwindow.ui

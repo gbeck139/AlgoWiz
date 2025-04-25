@@ -3,6 +3,24 @@
 #include "quizwindow.h"
 #include <QRandomGenerator>
 
+static const QString gameBtnStyle = R"(
+  QPushButton {
+    background: rgba(255,165,0,0.15);
+    border: 2px solid #FFA500;
+    border-radius: 8px;
+    color: #ffffff;
+    font: 700 18px 'Trebuchet MS';
+  }
+  QPushButton:hover {
+    background: #FFA500;
+    color: #000000;
+  }
+  QPushButton:pressed {
+    background: #FF7B00;
+    color: #000000;
+  }
+)";
+
 QuizWindow::QuizWindow(QWidget *parent)
     : QWidget(parent) {
 
@@ -19,6 +37,8 @@ QuizWindow::QuizWindow(QWidget *parent)
 
     startQuizButton = new QPushButton("Ready to Quiz", this);
     layout->addWidget(startQuizButton);
+    startQuizButton->setFixedHeight(80);
+    startQuizButton->setStyleSheet(gameBtnStyle);
 
     // Quiz setup
     quizLabel = new QLabel(this);
@@ -54,6 +74,8 @@ QuizWindow::QuizWindow(QWidget *parent)
 
     nextQuizButton = new QPushButton("Next", this);
     layout->addWidget(nextQuizButton);
+    nextQuizButton->setFixedHeight(80);
+    nextQuizButton->setStyleSheet(gameBtnStyle);
 
     // Hide quiz components initially
     quizLabel->hide();
