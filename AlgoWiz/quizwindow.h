@@ -1,6 +1,6 @@
 /**
  * @file quizwindow.h
- * @author Woojin Lee, Davide Perry
+ * @author Woojin Lee, David Perry
  * @brief This file contains the declaration of the QuizWindow class to create the quiz for algorithms.
  * @date 2025-04-24
  */
