@@ -1,3 +1,10 @@
+/**
+ * @file graphalgorenderer.cpp
+ * @brief Implementation of the GraphAlgoRenderer class, handling graph drawing and traversal animations.
+ * @author Jared Pratt, Grant Beck
+ * @date 2025-04-25
+ */
+
 #include "graphalgorenderer.h"
 #include <QPainter>
 #include <QTimer>
@@ -5,7 +12,6 @@
 
 GraphAlgoRenderer::GraphAlgoRenderer(QWidget* parent): QWidget(parent) {
 
-    // Set up graph
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
@@ -16,6 +22,7 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
 
     if (nodes.isEmpty()) return;
 
+    // Center the graph within the window
     int minX = INT_MAX, minY = INT_MAX;
     int maxX = INT_MIN, maxY = INT_MIN;
     for (auto &kv : nodes) {
@@ -28,20 +35,19 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
     int graphW = maxX - minX;
     int graphH = maxY - minY;
 
-    //Compute shiftX / shiftY so the graph is centered
     int shiftX = (width()  - graphW) / 2  -  minX;
     int shiftY = (height() - graphH) / 2  -  minY;
 
     painter.translate(shiftX, shiftY);
 
-    // Draw edges
     painter.setPen(QPen(Qt::white, 4));
 
     QFont font = painter.font();
-    font.setPointSize(14);                  // Change the number to adjust size
-    font.setBold(true);                     // Optional: Make it bold
+    font.setPointSize(14);
+    font.setBold(true);
     painter.setFont(font);
 
+    // Draw edges
     for (const Edge& edge : edges) {
         if (nodes.contains(edge.from) && nodes.contains(edge.to)) {
             painter.setPen(QPen(Qt::white, 4));
@@ -85,11 +91,12 @@ void GraphAlgoRenderer::paintEvent(QPaintEvent *)
 
 void GraphAlgoRenderer::runTraversalAnimation(const QVector<QString> &traversalOrder, int delayMs)
 {
+    // Read the traversal inputs
     for (int i = 0; i < traversalOrder.size(); ++i) {
         if(traversalOrder[i].startsWith("_")){
             QString edge = traversalOrder[i].split("_")[1];
             QTimer::singleShot(i * delayMs, this, [=]() {
-                setEdgeColor(edge.toInt(), QColor("#1E90FF"));
+                setEdgeColor(edge.toInt(), QColor("#1E90FF"));  // Blue color for edges
             });
         }else if(traversalOrder[i].startsWith(".")){
             QStringList parts = traversalOrder[i].split(".");
@@ -100,7 +107,7 @@ void GraphAlgoRenderer::runTraversalAnimation(const QVector<QString> &traversalO
             });
         }else {
             QTimer::singleShot(i * delayMs, this, [=]() {
-                setNodeColor(traversalOrder[i], QColor("#06FFFF"));
+                setNodeColor(traversalOrder[i], QColor("#06FFFF"));  // Cyan color for nodes
             });
         }
     }
@@ -135,19 +142,19 @@ void GraphAlgoRenderer::setEdgeColor(int id, const QColor& color){
 
 void GraphAlgoRenderer::createTheoryGraph(){
     addNode("A", QPoint(100, 300), false);
+
     addNode("B", QPoint(500, 300), false);
     addNode("C", QPoint(600, 300), false);
-
     addEdge("C", "B", false);
 
     addNode("D", QPoint(100, 600), true, 5);
     addNode("E", QPoint(600, 600), true, 2);
-
     addEdge("D", "E", true, 6);
 }
 
 void GraphAlgoRenderer::createUnweightedGraph()
 {
+    // Adds nodes and edges for an unweighted example graph
     addNode("A", QPoint(100, 300), false);
     addNode("B", QPoint(300, 300), false);
     addNode("C", QPoint(500, 300), false);
@@ -165,7 +172,7 @@ void GraphAlgoRenderer::createUnweightedGraph()
     addNode("O", QPoint(500, 750), false);
     addNode("P", QPoint(700, 750), false);
 
-
+    // Connecting edges
     addEdge("A", "B", false);
     addEdge("B", "C", false);
     addEdge("C", "D", false);
@@ -194,30 +201,28 @@ void GraphAlgoRenderer::createUnweightedGraph()
 
 void GraphAlgoRenderer::createWeightedGraph()
 {
-    // https://www.youtube.com/watch?v=bZkzH5x0SKU
-    // Add Nodes (coordinates chosen to reflect top row = 1,3,5 and bottom row = 0,2,4)
-    addNode("B", QPoint(300, 450), true, INT_MAX);   // Top-left
-    addNode("D", QPoint(300, 750), true, INT_MAX);   // Top-middle
-    addNode("F", QPoint(600, 750), true, INT_MAX);   // Top-right
-    addNode("A", QPoint(150, 600), true, 0);         // Bottom-left
-    addNode("C", QPoint(750, 600), true, INT_MAX);   // Bottom-middle
-    addNode("E", QPoint(600, 450), true, INT_MAX);   // Bottom-right
+    // Adds nodes and edges for a weighted example graph
+    addNode("B", QPoint(300, 450), true, INT_MAX);
+    addNode("D", QPoint(300, 750), true, INT_MAX);
+    addNode("F", QPoint(600, 750), true, INT_MAX);
+    addNode("A", QPoint(150, 600), true, 0);
+    addNode("C", QPoint(750, 600), true, INT_MAX);
+    addNode("E", QPoint(600, 450), true, INT_MAX);
 
-    // Add Edges (undirected, with weights taken from the diagram)
-    addEdge("A", "B", true, 2); // 2
-    addEdge("A", "D", true, 8); // 1
-    addEdge("B", "D", true, 5); // 3
-    addEdge("B", "E", true, 6); // 4
-    addEdge("D", "E", true, 3); // 6
-    addEdge("D", "F", true, 2); // 5
-    addEdge("F", "E", true, 1); // 7
-    addEdge("F", "C", true, 3); // 9
-    addEdge("E", "C", true, 9); // 8
+    addEdge("A", "B", true, 2);
+    addEdge("A", "D", true, 8);
+    addEdge("B", "D", true, 5);
+    addEdge("B", "E", true, 6);
+    addEdge("D", "E", true, 3);
+    addEdge("D", "F", true, 2);
+    addEdge("F", "E", true, 1);
+    addEdge("F", "C", true, 3);
+    addEdge("E", "C", true, 9);
 }
 
 void GraphAlgoRenderer::mousePressEvent(QMouseEvent *ev)
 {
-    // Calculate the same translation that is applied during painting
+    // Adjust mouse click position relative to the graph's centered position
     int minX = INT_MAX, minY = INT_MAX;
     int maxX = INT_MIN, maxY = INT_MIN;
     for (auto &kv : nodes) {
@@ -230,16 +235,14 @@ void GraphAlgoRenderer::mousePressEvent(QMouseEvent *ev)
     int graphW = maxX - minX;
     int graphH = maxY - minY;
 
-    // Compute the same shift as in paintEvent
     int shiftX = (width() - graphW) / 2 - minX;
     int shiftY = (height() - graphH) / 2 - minY;
 
-    // Adjust click position by subtracting the shifts
     QPoint adjustedPos = ev->pos() - QPoint(shiftX, shiftY);
 
-    // Now check if the adjusted position is inside any node
+    // Check if a node was clicked
     for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-        if (QLineF(adjustedPos, it.value().pos).length() <= 20) { // 20 is the node radius
+        if (QLineF(adjustedPos, it.value().pos).length() <= 20) {
             emit nodeClicked(it.key());
             break;
         }

@@ -1,3 +1,10 @@
+/**
+ * @file dfswindow.cpp
+ * @author Jared Pratt, Grant Beck
+ * @brief Implementation of the DFSWindow class, which sets up the DFS algorithm visualization window.
+ * @date 2025-04-25
+ */
+
 #include "dfswindow.h"
 #include "graphalgorenderer.h"
 #include <QVBoxLayout>
@@ -6,8 +13,11 @@
 DFSWindow::DFSWindow(QWidget *parent) : QWidget(parent) {
     setWindowTitle("Depth-First Search");
 
+    // Create the graph renderer and generate the unweighted graph
     auto *renderer = new GraphAlgoRenderer(this);
     renderer->createUnweightedGraph();
+
+    // Run the DFS traversal animation with a predefined traversal order
     renderer->runTraversalAnimation({
         "J", "_16",
         "F", "_15",
@@ -27,6 +37,7 @@ DFSWindow::DFSWindow(QWidget *parent) : QWidget(parent) {
         "P"
     });
 
+    // Set up layout and add the renderer widget
     auto *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0,0,0,0);
     layout->addWidget(renderer);

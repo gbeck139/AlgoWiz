@@ -1,3 +1,10 @@
+/**
+ * @file mainwindow.cpp
+ * @brief Implementation of the MainWindow class, which handles the main UI, navigation between algorithm windows, and user progress tracking in the AlgoWiz educational app.
+ * @author Jared Pratt, Grant Beck, Isaac Huntsman, Joshua Eggett, Woojin Lee, David Perry
+ * @date 2025-04-25
+ */
+
 #include "mainwindow.h"
 #include <QAudioOutput>
 #include <QDir>
@@ -24,6 +31,7 @@
 #include "lessonwindow.h"
 #include "ButtonPhysics.h"
 
+// Constructor: sets up UI, music, button styles, animations, and connects navigation logic
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -34,17 +42,15 @@ MainWindow::MainWindow(QWidget *parent)
     int newHeight = 0;
     adjustWindowSize(this, newWidth, newHeight);
 
-    // music
+    // Background music setup
     QMediaPlayer *player = new QMediaPlayer(this);
     QAudioOutput *audioOutput = new QAudioOutput(this);
     audioOutput->setVolume(0.50);
     player->setAudioOutput(audioOutput);
-
-    // Will take a few seconds to build first time around)
     player->setSource(QUrl("qrc:/audios/cool.mp3")); // simply change song name to either 'calm.mp3', 'cool.mp3', or 'hype.mp3'
     player->play();
 
-    //automatic positioning of buttons for user specific screen size
+    // Button positioning based on dynamic screen size
     ui->runtimeWindowButton->setGeometry(newWidth/8.5 + 100, newHeight/1.5 + 60, 150, 30);
     ui->graphTheoryWindowButton->setGeometry(newWidth/8.5 + 100, newHeight/1.5 + 100, 150, 30);
     ui->binarySearchWindowButton->setGeometry(newWidth/8.5 + 100, newHeight/1.5 + 140, 150, 30);
@@ -66,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_3->setGeometry(newWidth/3.3 - 20, newHeight/20, 500, 100);
     ui->progressPercentLabel->setGeometry(newWidth/1.4, newHeight/20, 500, 100);
 
-    // Algorithm windows and buttons
+    // Algorithm buttons list
     QList<QPushButton *> algoButtons = {ui->dfsWindowButton,
                                         ui->runtimeWindowButton,
                                         ui->mergesortWindowButton,
@@ -82,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     new ButtonPhysics(this, algoButtons);
 
-    // Save as lambdas so that the animation in the window do not begin running yet
+    // Window factory functions (deferred creation)
     QList<std::function<QWidget*()>> windowFactories = {
         // DFS
         []() {
@@ -187,9 +193,9 @@ MainWindow::MainWindow(QWidget *parent)
                 "Graph Theory \n\n"
                 "Graph theory studies structures of nodes (vertices) connected by edges. Graphs model networks "
                 "such as social connections, road maps, and communication links.\n\n"
-                "- Vertices and edges\n"
-                "- Directed vs undirected\n"
-                "- Weighted vs unweighted\n"
+                "- A, B, C, D, and E are vertices. Edges connect BC and DE\n"
+                "- Vertices can hold data: D has value 5\n"
+                "- Edges can also be weighted (DE has weight 6) or unweighted (BC)\n"
                 "- Traversals: BFS and DFS\n"
                 "- Shortest paths & spanning trees"
                 );
@@ -271,7 +277,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     };
 
-    // set up for progress meter
+    // Initialize progress tracking
     totalTasks = algoButtons.size();
     seen.fill(false, totalTasks);
     ui->progressBar->setRange(0, 100);
@@ -287,8 +293,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     progressPercentLabel->setText("0%");
 
-
-
+    // Connect buttons to their respective windows and update progress tracking
     for (int i = 0; i < algoButtons.size(); ++i) {
         QPushButton *button = algoButtons[i];
         auto factory = windowFactories[i];
@@ -317,7 +322,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// background image
+// Custom background image rendering
 void MainWindow::paintEvent(QPaintEvent *event){
     QMainWindow::paintEvent(event);
 
@@ -335,6 +340,7 @@ void MainWindow::paintEvent(QPaintEvent *event){
     }
 }
 
+// Sets button styles (hover, pressed, default)
 void MainWindow::setStyle(QPushButton* btn){
     btn->setCursor(Qt::PointingHandCursor);
     btn->setStyleSheet(R"(
@@ -357,6 +363,7 @@ void MainWindow::setStyle(QPushButton* btn){
     btn->setCheckable(true);
 }
 
+// Adjusts the main window size to fit the screen
 void MainWindow::adjustWindowSize(QWidget* window, int &newWidth, int &newHeight)
 {
     QScreen* screen = QGuiApplication::primaryScreen();

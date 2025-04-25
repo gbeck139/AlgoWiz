@@ -1,3 +1,10 @@
+/**
+ * @file graphtraversalgamewindow.cpp
+ * @brief Implementation of the GraphTraversalGameWindow class, providing an interactive game for BFS and DFS traversal practice.
+ * @author Jared Pratt, Grant Beck
+ * @date 2025-04-25
+ */
+
 #include "graphtraversalgamewindow.h"
 #include "graphalgorenderer.h"
 #include "styleutils.h"
@@ -14,6 +21,7 @@
 #include <QFrame>
 #include <algorithm>
 
+// Constructor: Initializes game components and UI
 GraphTraversalGameWindow::GraphTraversalGameWindow(QWidget *parent)
     : QWidget(parent),
     bfsRenderer(new GraphAlgoRenderer(this)),
@@ -31,6 +39,7 @@ GraphTraversalGameWindow::GraphTraversalGameWindow(QWidget *parent)
     setWindowTitle("Graph Traversal Quiz");
     setupUI();
 
+    // Prepare both game modes initially
     resetGame(true);
     resetGame(false);
     switchMode(true);
@@ -39,6 +48,7 @@ GraphTraversalGameWindow::GraphTraversalGameWindow(QWidget *parent)
 
 void GraphTraversalGameWindow::setupUI()
 {
+    // UI setup for BFS and DFS pages with renderer, labels, and frames
     auto *bfsPage = new QWidget(this);
     auto *dfsPage = new QWidget(this);
 
@@ -122,6 +132,7 @@ void GraphTraversalGameWindow::setupUI()
 
 void GraphTraversalGameWindow::switchMode(bool toBfs)
 {
+    // Switch between BFS and DFS modes and handle UI updates
     currentMode = toBfs;
     stackedWidget->setCurrentIndex(toBfs ? 0 : 1);
     bfsButton->setEnabled(!toBfs);
@@ -154,6 +165,7 @@ void GraphTraversalGameWindow::handleBfsNodeClick(const QString &id)
             emit playerFinished();
         }
     } else {
+        // Incorrect click, reset the BFS game
         bfsRenderer->setNodeColor(id, Qt::red);
         bfsLabel->setText("Incorrect! The BFS traversal will restart.");
         QTimer::singleShot(1500, this, [=]{ resetGame(true); });
@@ -172,6 +184,7 @@ void GraphTraversalGameWindow::handleDfsNodeClick(const QString &id)
             emit playerFinished();
         }
     } else {
+        // Incorrect click, reset the DFS game
         dfsRenderer->setNodeColor(id, Qt::red);
         dfsLabel->setText("Incorrect! The DFS traversal will restart.");
         QTimer::singleShot(1500, this, [=]{ resetGame(false); });
@@ -186,6 +199,7 @@ void GraphTraversalGameWindow::handleRestart()
 
 void GraphTraversalGameWindow::resetGame(bool bfsMode)
 {
+    // Resets the game state and regenerates the correct traversal order
     auto renderer = bfsMode ? bfsRenderer : dfsRenderer;
     auto keys = renderer->nodes.keys();
     QString start = keys.at(QRandomGenerator::global()->bounded(keys.size()));
@@ -227,6 +241,7 @@ void GraphTraversalGameWindow::resetGame(bool bfsMode)
 
 QVector<QString> GraphTraversalGameWindow::bfsOrder(const QString &start)
 {
+    // Standard BFS traversal with alphabetical tie-breaking
     QMap<QString,QSet<QString>> adj;
     for (auto &e : bfsRenderer->edges) {
         adj[e.from].insert(e.to);
@@ -243,7 +258,7 @@ QVector<QString> GraphTraversalGameWindow::bfsOrder(const QString &start)
         auto u = queue.dequeue();
         out.append(u);
         auto nbrs = adj[u].values();
-        std::sort(nbrs.begin(), nbrs.end());  // Sort neighbors alphabetically for consistent traversal
+        std::sort(nbrs.begin(), nbrs.end());  // Alphabetical order
         for (auto &v : nbrs)
             if (!seen.contains(v)) {
                 seen.insert(v);
@@ -255,6 +270,7 @@ QVector<QString> GraphTraversalGameWindow::bfsOrder(const QString &start)
 
 QVector<QString> GraphTraversalGameWindow::dfsOrder(const QString &start)
 {
+    // Standard DFS traversal with alphabetical tie-breaking (recursive)
     QMap<QString,QSet<QString>> adj;
     for (auto &e : dfsRenderer->edges) {
         adj[e.from].insert(e.to);
@@ -263,7 +279,6 @@ QVector<QString> GraphTraversalGameWindow::dfsOrder(const QString &start)
 
     QVector<QString> out;
     QSet<QString> seen;
-    // Recursive lambda to implement DFS traversal
     std::function<void(const QString&)> dfs = [&](const QString &u){
         seen.insert(u);
         out.append(u);

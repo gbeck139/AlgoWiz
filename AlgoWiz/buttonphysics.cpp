@@ -1,4 +1,10 @@
-// ButtonPhysics.cpp
+/**
+ * @file ButtonPhysics.cpp
+ * @author Jared Pratt, Grant Beck
+ * @brief Implementation of the ButtonPhysics class, applying Box2D physics simulation to QPushButton widgets.
+ * @date 2025-04-25
+ */
+
 #include "ButtonPhysics.h"
 #include <QDebug>
 #include <QRandomGenerator>
@@ -7,17 +13,21 @@
 ButtonPhysics::ButtonPhysics(QWidget* parent, const QList<QPushButton*>& buttons)
     : QObject(parent), m_parent(parent), m_buttons(buttons)
 {
+    // Initialize the Box2D physics world with minimal gravity
     m_world = new b2World(b2Vec2(0.0f, 0.03f));
 
+    // Setup the timer for physics updates
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &ButtonPhysics::updatePhysics);
 
+    // Store original button positions
     for (QPushButton* button : m_buttons) {
         m_originalPositions[button] = button->pos();
     }
 
     initPhysics();
 
+    // Start elapsed timer and assign random phase offsets to each button
     m_clock.start();
     for (QPushButton* b : m_buttons)
     {
@@ -27,6 +37,7 @@ ButtonPhysics::ButtonPhysics(QWidget* parent, const QList<QPushButton*>& buttons
 
     m_timer->start(20);
 
+    // Install event filters on each button for interactive nudges
     for (QPushButton* button : m_buttons) {
         button->installEventFilter(this);
     }
@@ -102,6 +113,7 @@ void ButtonPhysics::updatePhysics()
         b2Vec2 target   = home + wobble;
         b2Vec2 delta    = target - pos;
 
+        // Move body toward target with a soft spring effect
         body->SetTransform(pos + k * delta, 0.0f);
         body->SetLinearVelocity(b2Vec2(0, 0));
 
@@ -127,12 +139,14 @@ bool ButtonPhysics::eventFilter(QObject* watched, QEvent* event)
         b2Body* body = m_buttonBodies[button];
 
         if (event->type() == QEvent::Enter && body) {
+            // Apply a gentle nudge when the mouse hovers over the button
             body->SetLinearVelocity(b2Vec2(0, 0));
 
             float forceX = (QRandomGenerator::global()->bounded(6) - 3) * 0.7f;
             float forceY = -0.7f;
             body->ApplyLinearImpulse(b2Vec2(forceX, forceY), body->GetWorldCenter(), true);
 
+            // Slightly scale the button visually
             QString currentStyle = button->styleSheet();
             if (!currentStyle.contains("transform: scale(")) {
                 button->setStyleSheet(currentStyle + " transform: scale(1.02);");
@@ -141,6 +155,7 @@ bool ButtonPhysics::eventFilter(QObject* watched, QEvent* event)
             return true;
         }
         else if (event->type() == QEvent::Leave) {
+            // Remove scaling when the mouse leaves
             QString currentStyle = button->styleSheet();
             if (currentStyle.contains("transform: scale(")) {
                 int start = currentStyle.indexOf("transform:");

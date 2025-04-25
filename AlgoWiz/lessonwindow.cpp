@@ -1,3 +1,10 @@
+/**
+ * @file lessonwindow.cpp
+ * @brief Implementation of the LessonWindow class, providing a styled window for lessons with optional banner text and background decoration.
+ * @author Jared Pratt, Grant Beck
+ * @date 2025-04-25
+ */
+
 #include "lessonwindow.h"
 #include <QLabel>
 #include <QPushButton>
@@ -17,11 +24,11 @@ LessonWindow::LessonWindow(QWidget *algoWidget,
     exitBtn(new QPushButton("✕", this)),
     wizardFull(wizardPng)
 {
-    //Frameless & maximized (fills current Space / OS screen)
+    // Frameless and maximized window (fills the current screen)
     setWindowFlags(Qt::FramelessWindowHint);
     showMaximized();
 
-    //Red exit button, always in top‑right
+    // Red exit button, positioned in the top-right corner
     exitBtn->setFixedSize(40, 40);
     exitBtn->setStyleSheet(R"(
         QPushButton {
@@ -37,7 +44,7 @@ LessonWindow::LessonWindow(QWidget *algoWidget,
     )");
     connect(exitBtn, &QPushButton::clicked, this, &QWidget::close);
 
-    //Banner styling + wrap + horizontal expand
+    // Styling for the banner text
     textBanner->setStyleSheet(R"(
         background: rgba(0,0,0,0.75);
         color: white;
@@ -51,10 +58,11 @@ LessonWindow::LessonWindow(QWidget *algoWidget,
         QSizePolicy::Fixed
         );
 
+    // Layout for the content pane
     auto *v = new QVBoxLayout(contentPane);
     if (showBanner)
     {
-        // bump right margin so the banner never slides under the ✕
+        // Extra right margin to prevent banner overlap with the ✕ button
         v->setContentsMargins(48, 48, 200, 70);
         v->setSpacing(12);
         v->addWidget(textBanner,0);
@@ -66,7 +74,7 @@ LessonWindow::LessonWindow(QWidget *algoWidget,
     }
     v->addWidget(algoWidget, 1);
 
-    //Root layout: invisible 1/3 + contentPane (2/3)
+    // Root layout: invisible left spacer (1/3) + content pane (2/3)
     auto *root = new QHBoxLayout(this);
     root->setContentsMargins(0, 0, 0, 0);
     root->setSpacing(0);
@@ -98,6 +106,6 @@ void LessonWindow::paintEvent(QPaintEvent *event)
 void LessonWindow::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
-    // keep the red ✕ flush to the corner
+    // Keep the exit button flush with the top-right corner on resize
     exitBtn->move(width() - exitBtn->width() - 16, 16);
 }
