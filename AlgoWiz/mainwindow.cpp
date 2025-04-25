@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Will take a few seconds to build first time around)
     player->setSource(QUrl("qrc:/audios/cool.mp3")); // simply change song name to either 'calm.mp3', 'cool.mp3', or 'hype.mp3'
-    //player->play();
+    player->play();
 
     //automatic positioning of buttons for user specific screen size
     ui->runtimeWindowButton->setGeometry(newWidth/8.5 + 100, newHeight/1.5 + 60, 150, 30);
@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label->setGeometry(newWidth/2.3, -350, 1000, 1000);
     ui->progressBar->setGeometry(newWidth/2.8, newHeight/20, 500, 100);
     ui->label_3->setGeometry(newWidth/3.3 - 20, newHeight/20, 500, 100);
-    // ui->progressPercentLabel->setGeometry(newWidth/1.4, newHeight/20, 500, 100);
+    ui->progressPercentLabel->setGeometry(newWidth/1.4, newHeight/20, 500, 100);
 
     // Algorithm windows and buttons
     QList<QPushButton *> algoButtons = {ui->dfsWindowButton,
