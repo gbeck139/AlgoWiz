@@ -5,6 +5,8 @@ Algorithm Educational App
 This project was developed as part of my **Software Practice II** course at the University of Utah.  
 It was our team's final project, where we followed Agile development methods to plan, build, and deliver a functional educational tool for visualizing classic algorithms.
 
+![AlgoWiz Main Menu](images/AlgoWiz%20Main%20Menu.png)
+
 ## About the Project
 **AlgoWiz** is an interactive desktop application that demonstrates key algorithms through real-time animations and user interaction. It is designed to help students understand how algorithms like **Merge Sort**, **DFS**, **Dijkstra's Algorithm**, and various algorithms work under the hood.
 
